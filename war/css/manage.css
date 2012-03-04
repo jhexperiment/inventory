@@ -1,0 +1,22 @@
+.action-list .action {
+	cursor: pointer;
+	margin: 0px 8px;
+	color: blue;
+}
+
+.action-list .action:hover {
+	text-decoration: underline;
+}
+
+.header {
+	margin: 16px 0px 0px 0px;
+	font-size: 20px;
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+.item .text {
+	width: 200px;
+	display: inline-block;
+	
+}

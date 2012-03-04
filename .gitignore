@@ -1,0 +1,19 @@
+#ignore everything
+*
+
+#except ( "!" exceptions in sub directory .gitignore)
+!.gitignore
+!/src/
+!/src/*
+!/src/*/*
+!/src/*/*/*
+!/src/*/*/*/*
+!/src/*/*/*/*/*
+!/src/*/*/*/*/*/*
+!/war/
+!/war/*
+!/war/*/*
+!/war/*/*/*
+!/war/*/*/*/*
+!/war/*/*/*/*/*
+

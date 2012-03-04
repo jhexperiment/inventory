@@ -1,0 +1,693 @@
+html, body {
+	width: 100%;
+	height: 100%;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+	
+	font-family: arial,sans-serif;
+	font-size: 12px;
+}
+
+
+input[type=text],
+input[type=date],
+input[type=number],
+textarea,
+select {
+	padding: 2px 0px 2px 0px;
+	border: 1px solid #C0E0C0;
+	background-color: #F0F8F0;
+	color: #003600;
+	
+}
+
+.auraRed {
+	-moz-box-shadow: 0 0 20px red !important;
+	-webkit-box-shadow: 0 0 20px red !important;
+}
+
+.auraGreen,
+.auraSelected  {
+	-moz-box-shadow: 0 0 20px lightgreen;
+	-webkit-box-shadow: 0 0 20px lightgreen;
+}
+
+.auraLightBlue{
+	-moz-box-shadow: 0 0 20px #1BC6E0;
+	-webkit-box-shadow: 0 0 20px #1BC6E0;
+}
+
+.css_right {
+	float: right;
+}
+
+.css_left {
+	float: left;
+}
+
+.hidden {
+	position: absolute !important;
+	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+	clip: rect(1px, 1px, 1px, 1px);
+	padding: 0 !important;
+	border: 0 !important;
+	height: 1px !important;
+	width: 1px !important;
+	overflow: hidden;
+}
+
+.uiRoundCorners {
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+}
+
+.ui-resizable-handle {
+	background-image: none;
+}
+
+.ui-button {
+	padding: 5px 5px 5px 5px;
+	
+	font-weight: bold !important;
+}
+
+.ui-button .ui-button-text {
+	float: left;
+}
+.ui-button .ui-icon {
+	float: right;
+}
+
+.ui-dialog {
+	overflow: visible;
+}
+
+.ui-dialog .ui-dialog-buttonpane {
+	padding: 0px !important;
+}
+
+th.ui-state-default {
+	border-width: 0px ! important;
+}
+
+.ui-tabs .ui-tabs-panel {
+	padding: 1em 0 ! important;
+}
+
+.tooltip {
+	min-width: 50px;
+	
+	padding: 10px;
+  margin: 10px auto;
+  
+  border: 2px solid #433F38;
+  background-color: #ECE8DA;
+  color: #433F38;
+  text-align: left;
+  
+  position: fixed;
+  display: none;
+  
+  -moz-border-radius:10px;
+  -webkit-border-radius:10px;
+  -moz-box-shadow:0 0 5px #888888;
+  -webkit-box-shadow:0 0 5px #888888;
+  
+  z-index: 2000;
+}
+
+.tooltip .tooltip-content {
+	
+}
+
+.tooltip .tooltip-content input {
+	width: 40px;
+	
+	text-align: right;
+}
+
+.tooltip .tooltip-arrow {
+	border-style: solid;
+  border-width: 10px;
+  height:0;
+  width:0;
+  position:absolute;
+  
+}
+
+.tooltip .tooltip-arrow-left-top {
+	top: 9px;
+  left: -17px;
+  
+  border-color: transparent #EDEDED transparent transparent;
+}
+
+.tooltip .tooltip-arrow-border-left-top {
+	top: 9px;
+	left: -20px;
+	border-color: transparent #433F38 transparent transparent;
+}
+
+
+.tooltip .tooltip-arrow-bottom-left {
+	bottom: -19px;
+  left: 30px;
+  
+  border-color: #EDEDED transparent transparent transparent;
+}
+
+.tooltip .tooltip-arrow-border-bottom-left {
+	bottom: -22px;
+	left: 30px;
+	border-color: #433F38 transparent transparent transparent;
+}
+
+.tooltip .tooltip-arrow-top-left {
+	top: -18px;
+  left: 30px;
+  
+  border-color: transparent transparent #EDEDED transparent;
+}
+
+.tooltip .tooltip-arrow-border-top-left {
+	top: -21px;
+	left: 30px;
+	border-color: transparent transparent #433F38 transparent;
+}
+
+.tooltip .tooltip-arrow-top-right {
+	top: -18px;
+  right: 30px;
+  
+  border-color: transparent transparent #EDEDED transparent;
+}
+
+.tooltip .tooltip-arrow-border-top-right {
+	top: -21px;
+	right: 30px;
+	border-color: transparent transparent #433F38 transparent;
+}
+
+.tooltip .tooltip-arrow-border {
+	border-style: solid;
+  border-width: 10px;
+  height: 0;
+  width: 0;
+  position:absolute;
+}
+
+.tooltip .tooltip-arrow-border-bottom-left {
+	bottom: -22px;
+	left: 30px;
+	border-color: #666666 transparent transparent transparent;
+}
+
+.tooltip .tooltip-arrow-border-center-right {
+	left: -20px;
+	margin: auto 0px auto 0px;
+	border-color: transparent #666666 transparent transparent;
+}
+
+
+#popupBackground {
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	
+	position: absolute;
+	
+	z-index: 100;
+}
+
+#popupMenu {
+	-moz-box-shadow: 5px 5px 10px #000000;
+  -webkit-box-shadow: 5px 5px 10px #000000;
+  
+	z-index: 101;
+}
+
+#popupMenu .item {
+	padding: 5px 5px 5px 5px;
+	
+	font-size: 14px;
+	font-weight: bold;
+	
+	cursor: hand; cursor: pointer;
+}
+
+#popupMenu .item:hover {
+	background-color: #00bf00;
+	color: #f0f8f0;
+}
+
+#appNavBar {
+	width: 100%;
+	height: auto;
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+
+	border-top: 2px solid #C0E0C0;
+	border-bottom: 1px solid #C0E0C0;
+	
+	display: inline-block;
+}
+
+#appNavBar a {
+	color: #FFFFFF;
+	text-decoration: none;
+}
+
+#appNavBar .currentNavItem {
+	padding: 4px 5px 5px 5px !important;
+	font-weight: bold !important;
+	border-top: 3px solid #4FB500 !important;
+	/*
+	border-left: 3px solid #F5F3E5 !important;
+	border-right: 3px solid #F5F3E5 !important;
+	*/
+}
+
+#appNavBar .currentNavItem a,
+#appNavBar .currentNavItem .text {
+	color: #003600 !important;
+}
+
+#appNavBar .appNavLeftItem .text,
+#appNavBar .appNavRightItem .text,
+#appNavBar .currentNavItem .text {
+	float: left;
+}
+
+#appNavBar .appNavLeftItem,
+#appNavBar .appNavRightItem {
+	margin: -2px 0px 0px 0px;
+	padding: 5px 5px 5px 5px;
+	
+	font-weight: normal;
+
+	cursor: hand; cursor: pointer;
+}
+
+#appNavBar .appNavLeftItem:hover,
+#appNavBar .appNavRightItem:hover {
+	background-color: #C0EFC0;
+}
+#appNavBar .appNavLeftItem a,
+#appNavBar .appNavRightItem a,
+#appNavBar .appNavLeftItem .text,
+#appNavBar .appNavRightItem .text {
+		color: #008000;
+}
+
+#appNavBar .appNavLeftItem {
+	border-top: 2px solid transparent;
+	float: left;
+}
+
+#appNavBar .appNavRightItem {
+	border-top: 2px solid transparent;
+	float: right;
+}
+
+#appNavBar #userNavItem span {
+	float: right;
+}
+
+#appNavBar #moreNavItem span {
+	float: right;
+}
+
+#header {
+	width: 100%;
+	height: auto;
+	margin: 0px 0px 5px 0px;
+	
+	display: inline-block;
+	position: relative;
+}
+
+#header #logo {
+	position: relative;
+	left: 0px;
+	bottom: 0px;
+}
+
+#header #logo,
+#header #logo img {
+	width: 300px;
+}
+
+#header #searchBar {
+	position: absolute;
+	left: 310px;
+	bottom: 3px;
+}
+
+
+#header #searchBar #searchQuery input {
+	width: 200px;
+	line-height: 16px;
+	padding: 5px 0px 4px 0px;
+	font-size: 14px;
+}
+
+#header #searchBar #searchButton {
+	width: 70px;
+	position: absolute;
+	left: 200px;
+	bottom: 0px;
+}
+
+#header #searchBar #searchButton .text {
+	line-height: 16px;
+}
+
+#header #searchBar #searchButton span {
+	float: left;
+}
+
+
+
+#searchQuery {
+	width: 300px;
+}
+
+#searchResultsContainer {
+	width: 100%;
+	
+	overflow: hidden;
+	display: inline-block;
+}
+
+#searchResultsContainer #icon {
+	float: right;
+	
+	display: block;
+	position: relative;
+	
+	z-index: 50;
+}
+
+#searchResultsContainer .label {
+	
+	padding: 5px 5px 5px 5px;
+	
+	font-size: 14px;
+	font-weight: bold;	
+}
+
+#searchResultsContainer .label .text {
+	margin: 0px 5px 0px 0px;
+	
+}
+
+#searchResultsContainer .label span {
+	
+}
+
+#searchResultsContainer .label .ui-icon {
+	cursor: hand; cursor: pointer;
+}
+
+#searchResultsContainer .tableContainer {
+	width: 100%;
+	min-height: 10px;
+	max-height: 400px;
+	
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px;
+	
+	overflow-y: auto;
+	display: inline-block;
+}
+
+#searchResults {
+	width: 100%;
+	text-align: left;
+	
+	/*table-layout:fixed;*/
+}
+
+#searchResults .searchResultEmpty {
+	padding: 5px 5px 5px 5px;
+}
+
+
+#searchResults .item {
+	height: 20px;
+	
+	margin: 0px 0px 0px 0px;
+	padding: 5px 0px 0px 10px;
+	
+	font-weight: bold;
+	
+	border-bottom: 1px solid #C0E0C0;
+	
+	cursor: hand; cursor: pointer;
+}
+
+#searchResults #formSubmitted {
+	min-width: 34px;
+	width: 34px;
+	max-width: 34px;
+	
+	text-align: center;
+}
+
+#searchResults #name {
+	min-width: 300px;
+	width: 300px;
+	max-width: 300px;
+}
+
+#searchResults #date {
+	mmin-width: 90px;
+	width: 90px;
+	max-width: 90px;
+	
+	padding: 0px 10px 0px 0px;
+	
+	text-align: right;
+}
+
+#searchResults th#date {
+	text-align: left;
+}
+
+#searchResults #info {
+	text-overflow:ellipsis;
+	overflow:hidden;
+	white-space:nowrap;
+}
+
+#searchResults .ui-state-hover {
+	border-top: 0px !important;
+	border-left: 0px !important;
+	border-right: 0px !important;
+	border-bottom: 1px solid #C0E0C0;
+	background-color: #C0EFC0;
+	background: #C0EFC0;
+	color: #006B00;
+}
+
+#searchResultsContainer .label .title {
+	width: 99%;
+	margin: -20px 0px 0px 0px;
+	
+	text-align: center;
+	font-size: 20px;
+	
+	position: absolute;
+	display: block;
+	z-index: 10;
+}
+
+#searchResultsContainer .label .title .text {
+	display: inline-block;
+}
+
+#searchResultsContainer .label .title span {
+	display: inline-block;
+	
+}
+
+
+#content {
+	border: 0px solid #000;
+}
+
+#contentHeader {
+	text-align: center;
+}
+
+/*
+#content {
+	width: 100%;
+	min-height: 400px;
+	height: 400px;
+	
+	overflow-x: auto;
+}
+*/
+#inventoryType span {
+	float: left;
+}
+
+
+#generalTable_wrapper .buttons {
+	float: left;
+	text-align: left;
+	width: 50%;
+}
+
+.dataTables_wrapper .buttons .ui-button {
+	padding: 2px 2px 2px 2px ! important;
+}
+
+.dataTables_scroll td {
+	line-height: 24px;
+}
+
+.dataTables_scroll td.quantity {
+	text-align: right;
+}
+
+.dataTables_scroll td.quantity input {
+	text-align: right;
+	width: 30px;
+}
+
+.dataTables_scroll td.poNumber input {
+	width: 95px;
+}
+
+.dataTables_scroll td.description input {
+	width: 145px;
+}
+
+.dataTables_scroll td.decalNumber input {
+	width: 60px;
+}
+
+.dataTables_scroll td.propertyNumber input {
+	width: 90px;
+}
+
+.dataTables_scroll td.location input {
+	width: 55px;
+}
+
+.dataTables_scroll td.custodian input {
+	width: 140px;
+}
+
+.dataTables_scroll td.status input {
+	width: 95px;
+}
+
+
+
+
+.add_delete_toolbar {
+	display: inline-block;
+}
+
+
+.ui-dialog-buttonset .ui-button {
+	padding: 0px ! important; 
+}
+
+
+form label {
+	padding: 5px 0px 0px 0px;
+	display: block;
+}
+
+form label.error {
+	padding: 0px 0px 0px 0px;
+	background-color: #FFEDAD;
+	color: #BF6000;
+	border: 1px solid #DFB080;
+	
+	
+}
+
+.ui-dialog form {
+	 
+}
+
+#formAddGeneralItemRow #poNumber {
+	width: 55px;
+}
+
+
+#formAddGeneralItemRow #description,
+#formAddGeneralItemRow #notes,
+#formAddGeneralItemRow #custodian {
+	width: 100%;
+}
+
+#formAddGeneralItemRow #decalNumber {
+	width: 55px;
+}
+
+#formAddGeneralItemRow #propertyNumber {
+	width: 65px;
+}
+
+#formAddGeneralItemRow #location {
+	width: 55px;
+}
+
+#formAddGeneralItemRow #quantity {
+	width: 30px;
+}
+
+#generalTable_wrapper td.details label {
+	width: 125px;
+	display: inline-block;
+	
+	font-weight: bold;
+}
+
+#generalTable_wrapper td.details {
+	
+}
+
+table.display td.details form {
+	display: inline-block;
+}
+
+
+#footer {
+	width: 100%;
+	
+	margin: 20px 0px 0px 0px;
+	
+	/*background: url("/css/jquery/images/ui-bg_gloss-wave_100_ece8da_500x100.png") repeat-x scroll 50% 50% #ECE8DA;*/
+	background-color: #E0F0E0;
+	border-top: 1px solid #C0E0C0;
+	border-bottom: 1px solid #C0E0C0;
+	
+	display: inline-block;
+	
+	color: #003600;
+  font-weight: bold;
+	font-size: 10px;
+	text-align: right;	
+}
+
+
+
+#searchBar,
+#contentHeader,
+#searchResultsContainer {
+	display: none;
+}
+ 
+
+
+
+
