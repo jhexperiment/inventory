@@ -11,7 +11,10 @@ import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.jhexperiment.java.inventory.DuplicateCustodianException;
 import com.jhexperiment.java.inventory.DuplicateInvItemException;
+import com.jhexperiment.java.inventory.DuplicateLocationException;
+import com.jhexperiment.java.inventory.DuplicateStatusException;
 import com.jhexperiment.java.inventory.InvItemException;
 import com.jhexperiment.java.inventory.model.KeyInv;
 import com.jhexperiment.java.inventory.model.GeneralInv;
@@ -66,8 +69,8 @@ public enum KeyInvDao {
   public void add(KeyInv keyInv) throws DuplicateInvItemException {
     synchronized (this) {
       if (! this.keyInvExists(keyInv)) {
-    	  EntityManager em = EMFService.get().createEntityManager();
-          em.persist(keyInv);
+    	EntityManager em = EMFService.get().createEntityManager();
+        em.persist(keyInv);
         em.refresh(keyInv);
         em.persist(keyInv);
         //em.refresh(generalInv);
@@ -77,6 +80,24 @@ public enum KeyInvDao {
         // throw duplicate absence error
         throw new DuplicateInvItemException("Electronic inventory item not added.");
       }
+      
+      try {
+		CustodianDao.INSTANCE.add(keyInv.getCustodian());
+	  } catch (DuplicateCustodianException e) {
+		
+	  }
+	  
+	  try {
+		LocationDao.INSTANCE.add(keyInv.getLocation());
+	  } catch (DuplicateLocationException e) {
+		
+	  }
+	  
+	  try {
+		StatusDao.INSTANCE.add(keyInv.getStatus());
+	  } catch (DuplicateStatusException e) {
+		
+	  }
     }
   }
   

@@ -11,7 +11,10 @@ import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.jhexperiment.java.inventory.DuplicateCustodianException;
 import com.jhexperiment.java.inventory.DuplicateInvItemException;
+import com.jhexperiment.java.inventory.DuplicateLocationException;
+import com.jhexperiment.java.inventory.DuplicateStatusException;
 import com.jhexperiment.java.inventory.InvItemException;
 import com.jhexperiment.java.inventory.model.GeneralInv;
 
@@ -91,6 +94,24 @@ public enum GeneralInvDao {
         // throw duplicate absence error
         throw new DuplicateInvItemException("General inventory item not added.");
       }
+      
+      try {
+  		CustodianDao.INSTANCE.add(generalInv.getCustodian());
+  	  } catch (DuplicateCustodianException e) {
+  		
+  	  }
+  	  
+  	  try {
+		LocationDao.INSTANCE.add(generalInv.getLocation());
+	  } catch (DuplicateLocationException e) {
+		
+	  }
+	  
+	  try {
+		StatusDao.INSTANCE.add(generalInv.getStatus());
+	  } catch (DuplicateStatusException e) {
+		
+	  }
     }
   }
   

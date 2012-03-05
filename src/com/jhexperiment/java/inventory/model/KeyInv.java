@@ -1,7 +1,5 @@
 package com.jhexperiment.java.inventory.model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -10,8 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import com.jhexperiment.java.inventory.InvalidGeneralItemException;
 import com.jhexperiment.java.inventory.InvalidKeyItemException;
+import com.jhexperiment.java.inventory.JhDate;
 
 @Entity
 public class KeyInv implements Comparable<KeyInv> {
@@ -65,7 +63,6 @@ public class KeyInv implements Comparable<KeyInv> {
   }
   
   public KeyInv(String[] aData) throws InvalidKeyItemException {
-      SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yy");
       int iIndex = 1;
       int iFieldCount = 12;
       try {
@@ -93,28 +90,11 @@ public class KeyInv implements Comparable<KeyInv> {
       }
  
       this.custodian = aData[iIndex++];
-      
-      try {
-        this.issuedDate = (Date) formatter.parse(aData[iIndex++]);
-      } 
-      catch (ParseException e) {
-
-      }
-      
-      try {
-        this.returnedDate = (Date) formatter.parse(aData[iIndex++]);
-      } 
-      catch (ParseException e) {
-        
-      }
+      this.issuedDate = (Date) JhDate.parse(aData[iIndex++]);
+      this.returnedDate = (Date) JhDate.parse(aData[iIndex++]);
       this.status = aData[iIndex++];
       this.notes = aData[iIndex++];
-      try {
-        this.lastEditDate = (Date) formatter.parse(aData[iIndex++]);
-      } 
-      catch (ParseException e) {
-      
-      }
+      this.lastEditDate = (Date) JhDate.parse(aData[iIndex++]);
       this.lastEditUser = aData[iIndex++];
     
     }
@@ -229,7 +209,6 @@ public class KeyInv implements Comparable<KeyInv> {
   }
   
   public HashMap<String, Object> toHashMap() {
-    SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
     HashMap<String, Object> aOutput = new HashMap<String, Object>();
     aOutput.put("id", this.id);
     aOutput.put("location", this.location);
@@ -240,18 +219,18 @@ public class KeyInv implements Comparable<KeyInv> {
     aOutput.put("issued-date", this.inStock);
     String sDate = null;
     if (this.issuedDate != null) {
-    	sDate = formatter.format(this.issuedDate);
+    	sDate = JhDate.format(this.issuedDate);
     }
     aOutput.put("return-date", sDate);
     sDate = null;
     if (this.returnedDate != null) {
-    	sDate = formatter.format(this.returnedDate);
+    	sDate = JhDate.format(this.returnedDate);
     }
     aOutput.put("status", this.status);
     aOutput.put("notes", this.notes);
     sDate = null;
     if (this.lastEditDate != null) {
-    	sDate = formatter.format(this.lastEditDate);
+    	sDate = JhDate.format(this.lastEditDate);
     }
     aOutput.put("last-edit-user", this.lastEditUser);
     
@@ -259,7 +238,6 @@ public class KeyInv implements Comparable<KeyInv> {
   }
 
   public static HashMap<String, Object> toEmptyHashMap() {
-    SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
     HashMap<String, Object> aOutput = new HashMap<String, Object>();
     aOutput.put("id", 0);
     aOutput.put("location", "");
@@ -282,18 +260,17 @@ public class KeyInv implements Comparable<KeyInv> {
   }
 	  
   public String toCsvData(String sAction) {
-    SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
     String sOutput = 
       sAction + ","
       + this.id + ","
       + '"' + this.location + "\","
       + '"' + this.description + "\","
       + '"' + this.custodian + "\","
-      + '"' + formatter.format(this.issuedDate) + "\","
-      + '"' + formatter.format(this.returnedDate) + "\","
+      + '"' + JhDate.format(this.issuedDate) + "\","
+      + '"' + JhDate.format(this.returnedDate) + "\","
       + '"' + this.status + "\"," 
       + '"' + this.notes + "\"," 
-      + '"' + formatter.format(this.lastEditDate) + "\","
+      + '"' + JhDate.format(this.lastEditDate) + "\","
       + '"' + this.lastEditUser+ "\"\n";;
     return sOutput;
   }

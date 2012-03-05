@@ -157,8 +157,12 @@ else {
 	  
 	  <div id="result-container">
       <div class="label ui-widget ui-widget-header">
+          <span id="clear-button" class="ui-button ui-widget ui-state-default ui-corner-all" type="button">
+            Clear
+          </span>
           <div class="title">
             <span class="text">Results:</span>
+            <span class="count"></span>
           </div>
           <span id="icon" class="ui-state-default ui-corner-all">
             <span class="ui-icon ui-icon-arrowthickstop-1-s"></span>

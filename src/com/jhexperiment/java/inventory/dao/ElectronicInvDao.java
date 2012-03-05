@@ -11,7 +11,10 @@ import java.util.Random;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
+import com.jhexperiment.java.inventory.DuplicateCustodianException;
 import com.jhexperiment.java.inventory.DuplicateInvItemException;
+import com.jhexperiment.java.inventory.DuplicateLocationException;
+import com.jhexperiment.java.inventory.DuplicateStatusException;
 import com.jhexperiment.java.inventory.InvItemException;
 import com.jhexperiment.java.inventory.model.ElectronicInv;
 import com.jhexperiment.java.inventory.model.GeneralInv;
@@ -60,6 +63,24 @@ public enum ElectronicInvDao {
         // throw duplicate absence error
         throw new DuplicateInvItemException("Electronic inventory item not added.");
       }
+      
+      try {
+  		CustodianDao.INSTANCE.add(electronicInv.getCustodian());
+  	  } catch (DuplicateCustodianException e) {
+  		
+  	  }
+  	  
+  	  try {
+		LocationDao.INSTANCE.add(electronicInv.getLocation());
+	  } catch (DuplicateLocationException e) {
+		
+	  }
+	  
+	  try {
+		StatusDao.INSTANCE.add(electronicInv.getStatus());
+	  } catch (DuplicateStatusException e) {
+		
+	  }
     }
   }
   

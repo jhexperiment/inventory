@@ -325,6 +325,7 @@ th.ui-state-default {
 }
 
 #result-container #icon {
+	margin: 2px 0px 0px 0px;
   float: right;
   
   display: block;
@@ -335,7 +336,7 @@ th.ui-state-default {
 
 #result-container .label {
   padding: 5px 0px 5px 0px;
-  height: 16px;
+  height: 20px;
   font-size: 14px;
   font-weight: bold;  
 }
@@ -345,8 +346,14 @@ th.ui-state-default {
   
 }
 
-#result-container .label span {
-  
+#result-container .label #clear-button {
+	z-index: 199;
+	cursor: pointer;
+	width: 40px;
+	padding: 2px 0px;
+	font-size: 10pt;
+	display: inline-block;
+	float: left;
 }
 
 #result-container .label .ui-icon {

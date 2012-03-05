@@ -131,6 +131,12 @@ inventoryTable = {
         thisPage.displayPopupMenu(this, menuItemList);
     });
     
+    
+    $("#result-container .label #clear-button").click(function() {
+      $("#result-container table#result").html("");
+    });
+    
+    
     $(".dialog #location .suggestable").suggestable({'sType': 'location'});
     $(".dialog #custodian .suggestable").suggestable({'sType': 'custodian'});
     $(".dialog #status .suggestable").suggestable({'sType': 'status'});
@@ -1050,7 +1056,9 @@ thisPage = {
     htmlDom.children('form').ajaxForm({
       "dataType": "json",
       "success": function(info, textStatus, jqXHR) {
-        $("#result-container .title .text").html("Csv Import Results:");
+        var oTitle = $("#result-container .title");
+        oTitle.find(".text").html("Csv Import Results:");
+        oTitle.find(".count").html(info['inventory-list'].length + " records processed.");
         thisPage.clearSearchResults();
         $.each(info['inventory-list'], function(index) {
           thisPage.displaySearchResult(this, index);
@@ -1062,6 +1070,8 @@ thisPage = {
         $("#result-container table#result #form-submitted").hide();
         
         $("#content-header #inventory-type .ui-state-active").click();
+        
+        
       }
     });
     $("body").append(htmlDom);

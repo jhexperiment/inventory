@@ -1,7 +1,5 @@
 package com.jhexperiment.java.inventory.model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -11,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 import com.jhexperiment.java.inventory.InvalidElectronicItemException;
+import com.jhexperiment.java.inventory.JhDate;
 
 @Entity
 public class ElectronicInv implements Comparable<ElectronicInv> {
@@ -192,7 +191,6 @@ public class ElectronicInv implements Comparable<ElectronicInv> {
   }
   
   public ElectronicInv(String[] aData) throws InvalidElectronicItemException {
-    SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yy");
     
     try {
       this.id = Long.parseLong(aData[1]);
@@ -208,20 +206,8 @@ public class ElectronicInv implements Comparable<ElectronicInv> {
     }
     
     this.poNumber = aData[2];
-    
-    try {
-      this.poDate = (Date) formatter.parse(aData[3]);
-    } 
-    catch (ParseException e) {
-
-    }
-    
-    try {
-      this.poRecieveDate = (Date) formatter.parse(aData[4]);
-    } 
-    catch (ParseException e) {
-      
-    }
+    this.poDate = (Date) JhDate.parse(aData[3]);
+    this.poRecieveDate = (Date) JhDate.parse(aData[4]);
     this.description = aData[5];
     this.make = aData[6];
     this.model = aData[7];
@@ -233,12 +219,7 @@ public class ElectronicInv implements Comparable<ElectronicInv> {
     this.funder = aData[13];
     this.status = aData[14];
     this.notes = aData[15];
-    try {
-      this.lastEditDate = (Date) formatter.parse(aData[16]);
-    } 
-    catch (ParseException e) {
-    
-    }
+    this.lastEditDate = (Date) JhDate.parse(aData[16]);
     this.lastEditUser = aData[17];
   
   }
@@ -258,18 +239,17 @@ public class ElectronicInv implements Comparable<ElectronicInv> {
   }
   
   public HashMap<String, Object> toHashMap() {
-    SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
     HashMap<String, Object> aOutput = new HashMap<String, Object>();
     aOutput.put("id", this.id);
     aOutput.put("po-number", this.poNumber);
     String sDate = null;
     if (this.poDate != null) {
-    	sDate = formatter.format(this.poDate);
+    	sDate = JhDate.format(this.poDate);
     }
     aOutput.put("po-date", sDate);
     sDate = null;
     if (this.poRecieveDate != null) {
-    	sDate = formatter.format(this.poRecieveDate);
+    	sDate = JhDate.format(this.poRecieveDate);
     }
     aOutput.put("po-recieve-date", sDate);
     aOutput.put("description", this.description);
@@ -285,7 +265,7 @@ public class ElectronicInv implements Comparable<ElectronicInv> {
     aOutput.put("notes", this.notes);
     sDate = null;
     if (this.lastEditDate != null) {
-    	sDate = formatter.format(this.lastEditDate);
+    	sDate = JhDate.format(this.lastEditDate);
     }
     aOutput.put("last-edit-date", sDate);
     aOutput.put("last-edit-user", this.lastEditUser);
@@ -293,7 +273,6 @@ public class ElectronicInv implements Comparable<ElectronicInv> {
     return aOutput;
   }
   public static HashMap<String, Object> toEmptyHashMap() {
-    SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
     HashMap<String, Object> aOutput = new HashMap<String, Object>();
     aOutput.put("id", 0);
     aOutput.put("po-number", "");
@@ -323,13 +302,12 @@ public class ElectronicInv implements Comparable<ElectronicInv> {
   }
   
   public String toCsvData(String sAction) {
-    SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
     String sOutput = 
       sAction + ","
       + this.id + ","
       + '"' + this.poNumber + "\","
-      + '"' + formatter.format(this.poDate) + "\","
-      + '"' + formatter.format(this.poRecieveDate) + "\","
+      + '"' + JhDate.format(this.poDate) + "\","
+      + '"' + JhDate.format(this.poRecieveDate) + "\","
       + '"' + this.description + "\","
       + '"' + this.make + "\","
       + '"' + this.model + "\","
@@ -341,7 +319,7 @@ public class ElectronicInv implements Comparable<ElectronicInv> {
       + '"' + this.funder + "\","
       + '"' + this.status + "\"," 
       + '"' + this.notes + "\"," 
-      + '"' + formatter.format(this.lastEditDate) + "\","
+      + '"' + JhDate.format(this.lastEditDate) + "\","
       + '"' + this.lastEditUser+ "\"\n";;
     return sOutput;
   }

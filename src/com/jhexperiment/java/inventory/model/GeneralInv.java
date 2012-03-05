@@ -1,7 +1,5 @@
 package com.jhexperiment.java.inventory.model;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -173,8 +171,6 @@ public class GeneralInv implements Comparable<GeneralInv> {
   }
   
   public GeneralInv(String[] aData) throws InvalidGeneralItemException {
-    //SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yy");
-    
     try {
       this.id = Long.parseLong(aData[1]);
     }
@@ -211,7 +207,6 @@ public class GeneralInv implements Comparable<GeneralInv> {
   
   
   public HashMap<String, Object> toHashMap() {
-    //SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
     HashMap<String, Object> aOutput = new HashMap<String, Object>();
     aOutput.put("id", this.id);
     aOutput.put("po-number", this.poNumber);
@@ -242,7 +237,6 @@ public class GeneralInv implements Comparable<GeneralInv> {
     return aOutput;
   }
   public static HashMap<String, Object> toEmptyHashMap() {
-    //SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
     HashMap<String, Object> aOutput = new HashMap<String, Object>();
     aOutput.put("id", 0);
     aOutput.put("po-number", "");
@@ -269,7 +263,6 @@ public class GeneralInv implements Comparable<GeneralInv> {
   }
   
   public String toCsvData(String sAction) {
-    //SimpleDateFormat formatter = new SimpleDateFormat("MMM dd, yyyy");
     String sOutput = 
       sAction + ","
       + this.id + ","
