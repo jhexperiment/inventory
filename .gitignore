@@ -17,3 +17,5 @@
 !/war/*/*/*/*
 !/war/*/*/*/*/*
 
+
+/war/WEB-INF/appengine-generated/*

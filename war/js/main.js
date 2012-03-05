@@ -173,6 +173,8 @@ inventoryTable = {
               return false;
             }
             */
+            
+            $('.inventory-table th#info-btn input[type="checkbox"]').removeAttr("checked");
           });
           
           $("#search-container #delete-button").addClass('ui-state-disabled').removeClass("ui-state-default");
