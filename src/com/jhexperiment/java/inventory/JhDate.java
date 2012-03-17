@@ -5,14 +5,13 @@ import java.util.Date;
 
 public class JhDate {
 	public static String[] aFormatList = {
+		"MM-dd-yy",
 		"MMM-dd-yyyy", 
 		"MM/dd/yyyy",
 		"MM.dd.yyyy",
 		"MM/dd/yy",
-		"MM.dd.yy",
 		"MM-dd-yyyy",
 		"MM.dd.yyyy",
-		"MM-dd-yy",
 		"MM.dd.yy",
 		"MMMM/dd/yyyy",
 		"MMMM.dd.yyyy",
