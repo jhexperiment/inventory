@@ -1,4 +1,7 @@
 $(document).ready(function() {
+  oMain.fnInit();
+  
+  
   $.fn.suggestable = function(aOptions) {
     var fnSuggestPopup = function(event) {
       var aSavedOptions = $(this).data('aOptions');
@@ -142,6 +145,11 @@ inventoryTable = {
     $(".dialog #status .suggestable").suggestable({'sType': 'status'});
     
     $(".dialog .datepicker").datepicker();
+    
+    $(".ui-dialog-content .info-item .icon").click(function() {
+       var oInfoItem = $(this).parents(".info-item");
+       oInfoItem.find(".input input").click();
+    });
     
     
     $("#search-container #delete-button").click(function() {
@@ -730,6 +738,10 @@ inventoryTable = {
             inventoryTable.addSortingClasses();
             break;
           case "keys":
+            if ( ! $.fnIsEmpty(aData.aRecordList)) {
+              var iCount = aData.aRecordList.length;
+              $("#search-container .record-count").html("Total: " + iCount);
+            } 
             inventoryTable.fillKeyTable(aData.aRecordList);
             inventoryTable.addSortingClasses();
             break;

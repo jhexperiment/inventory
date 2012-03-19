@@ -1,22 +1,66 @@
-.action-list .action {
+
+.column {
+	margin: 0px 16px 0px 0px;
+	padding: 8px;
+  width: 300px;
+  height: auto;
+  display: inline-block;
+  float: left;
+  border: 1px solid #000000;
+}
+
+.column .header {
+  margin: 16px 0px 0px 0px;
+  font-size: 20px;
+  font-weight: bold;
+  text-decoration: underline;
+}
+
+.column .action-list {
+	float: right;
+}
+
+.column .action-list .action {
 	cursor: pointer;
 	margin: 0px 8px;
 	color: blue;
+	display: inline-block;
+  flaot: right;
 }
 
-.action-list .action:hover {
+.column .action-list .action:hover {
 	text-decoration: underline;
 }
 
-.header {
-	margin: 16px 0px 0px 0px;
-	font-size: 20px;
-	font-weight: bold;
-	text-decoration: underline;
+.column .new.action-list {
+	width: 100%;
+	display: inline-block;
 }
 
-.item .text {
-	width: 200px;
+.column .new.action-list .action {
+	float: right;
+}
+
+
+.column .action-list .item {
+	wdith: 100%;
+	display: inline-block;
+}
+
+.column .action-list .item .text {
+	width: 160px;
 	display: inline-block;
 	
+}
+
+#location-column {
+  width: 240px;
+}
+
+#status-column #status-list .item .text {
+  width: 100px;
+}
+
+#custodian-column {
+	width: 300px;
 }

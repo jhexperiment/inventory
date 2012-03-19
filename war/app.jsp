@@ -86,9 +86,11 @@ else {
     <script type="text/javascript" src="/js/jquery/plugins/jquery.form.js"></script>
     <script type="text/javascript" src="/js/jquery/plugins/jquery.tools.min.js"></script>
     <script type="text/javascript" src="/js/jquery/plugins/jquery.md5.js"></script>
+    <script type="text/javascript" src="/js/jquery/plugins/jquery.extend.js"></script>
     <script type="text/javascript" src="/js/common.js"></script>
     <script type="text/javascript" src="/js/main.js"></script>
     <link rel="stylesheet" type="text/css" href="css/jquery/jquery-ui.css"/>
+    <link rel="stylesheet" type="text/css" href="css/common.css"/>
     <link rel="stylesheet" type="text/css" href="css/main.css"/>
     <meta charset="utf-8"> 
   </head>
@@ -179,6 +181,8 @@ else {
 	  
 	    <div id="tabs" class="ui-tabs ui-widget ui-widget-content ui-corner-all">
 	      <div id="search-container">
+	        <span class="record-count"></span>
+	      
 	        <span id="add-button" type="button" class="ui-button ui-widget ui-state-default ui-corner-all">
 	          Add
 	        </span>
@@ -419,6 +423,9 @@ else {
       </div>
       
       <div id="location" class="info-item">
+        <div class="icon ui-state-default ui-corner-all" title=".ui-icon-triangle-1-s">
+          <span class="ui-icon ui-icon-triangle-1-s"></span>
+        </div>
         <span class="label">Location<span class="red">*</span></span>
         <span class="input">
           <input type="text" class="required suggestable" />

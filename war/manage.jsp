@@ -74,70 +74,120 @@ else {
     <title>Manage</title>
     <script type="text/javascript" src="/js/jquery/jquery.js"></script>
     <script type="text/javascript" src="/js/jquery/jquery-ui.js"></script>
-    <script type="text/javascript" src="/js/jquery/plugins/jquery.form.js"></script>
-    <script type="text/javascript" src="/js/jquery/plugins/jquery.tools.min.js"></script>
-    <script type="text/javascript" src="/js/jquery/plugins/jquery.md5.js"></script>
-    <script type="text/javascript" src="/js/common.js"></script>
+    <script type="text/javascript" src="/js/jquery/plugins/jquery.extend.js"></script>
     <script type="text/javascript" src="/js/manage.js"></script>
     <link rel="stylesheet" type="text/css" href="css/jquery/jquery-ui.css"/>
+    <link rel="stylesheet" type="text/css" href="css/common.css"/>
     <link rel="stylesheet" type="text/css" href="css/manage.css"/>
     <meta charset="utf-8"> 
   </head>
  <body>
  
-   <div id="status-header" class="header">Status</div>
-   <div id="status-list">
+  <div id="app-nav-bar">
+     <div id="mail-nav-item" class="app-nav-left-item">
+       <a href="http://mail.<%= googleProps.getProperty("domain")%>">Mail</a>
+     </div>
+     <div id="calendar-nav-item" class="app-nav-left-item">
+       <a href="http://calendar.<%= googleProps.getProperty("domain")%>">Calendar</a>
+     </div>
+     <div id="docs-nav-item" class="app-nav-left-item">
+       <a href="http://docs.<%= googleProps.getProperty("domain")%>">Documents</a>
+     </div>
+     <div id="sites-nav-item" class="app-nav-left-item">
+       <a href="http://sites.<%= googleProps.getProperty("domain")%>">Sites</a>
+     </div>
+     <div id="inventory-nav-item" class="current-nav-item app-nav-left-item">
+       <a href="/">Inventory</a>
+     </div>
+     <div id="more-nav-item" class="app-nav-left-item">
+       <div class="text">Extras</div> 
+       <span class="ui-corner-all">
+         <span class="ui-icon ui-icon-triangle-1-s"></span>
+       </span>
+     </div>
+     
+     
+     <div id="user-nav-item" class="app-nav-right-item">
+       <input class="logout-url" type="hidden" value="<%= /*url*/ 1 %>">
+       <div class="text"><%=user.getEmail() %></div>
+       <span class="ui-corner-all">
+         <span class="ui-icon ui-icon-triangle-1-s"></span>
+       </span>
+     </div>
+   </div>
+   <div id="header">
+     <div id="logo"><img alt="logo" src="/images/maili_banner_09.jpg"/></div>
+   </div>
+   
+   <span id="status-column" class="column">
+   
+	   <div id="status-header" class="header">Status</div>
+	   <div class="new action-list">
+       <span class="add-action action">new</span>
+     </div>
+     <div id="status-list">
 <%
 StatusDao oStatusDao = StatusDao.INSTANCE;
 for (Status oStatus : oStatusDao.listStatus()) {
 %>
-      <div id="<%=oStatus.getId() %>" class="status-item item">
-        <span class="text"><%=oStatus.getName()%></span>
-        <span class="action-list">
-	        <span class="delete action">delete</span>
-	        <span class="rename action">rename</span>
-        </span>
-      </div>
+	      <div id="<%=oStatus.getId() %>" class="status-item item">
+	        <span class="text"><%=oStatus.getName()%></span>
+	        <span class="action-list">
+		        <span class="delete action">delete</span>
+		        <span class="rename action">rename</span>
+	        </span>
+	      </div>
 <%
 }
 %>
-   </div>
+    </div>
+   </span>
    
-   <div id="location-header" class="header">Location</div>
-   <div id="location-list">
+   <span id="location-column" class="column">
+	   <div id="location-header" class="header">Location</div>
+	   <div class="new action-list">
+	     <span class="add-action action">new</span>
+	   </div>
+	   <div id="location-list">
 <%
 LocationDao oLocationDao = LocationDao.INSTANCE;
 for (Location oLocation : oLocationDao.listLocation()) {
 %>
-      <div id="<%=oLocation.getId() %>" class="location-item item">
-        <span class="text"><%=oLocation.getName()%></span>
-        <span class="action-list">
-          <span class="delete action">delete</span>
-          <span class="rename action">rename</span>
-        </span>
-      </div>
+	      <div id="<%=oLocation.getId() %>" class="location-item item">
+	        <span class="text"><%=oLocation.getName()%></span>
+	        <span class="action-list">
+	          <span class="delete action">delete</span>
+	          <span class="rename action">rename</span>
+	        </span>
+	      </div>
 <%
 }
 %>
-   </div>
+    </div>
+   </span>
    
-   <div id="custodian-header" class="header">Custodian</div>
-   <div id="custodian-list">
+   <span id="custodian-column" class="column">
+	   <div id="custodian-header" class="header">Custodian</div>
+	   <div class="new action-list">
+       <span class="add-action action">new</span>
+     </div>
+     <div id="custodian-list">
 <%
 CustodianDao oCustodianDao = CustodianDao.INSTANCE;
 for (Custodian oCustodian : oCustodianDao.listCustodian()) {
 %>
-      <div id="<%=oCustodian.getId() %>" class="custodian-item item">
-        <span class="text"><%=oCustodian.getName()%></span>
-        <span class="action-list">
-          <span class="delete action">delete</span>
-          <span class="rename action">rename</span>
-        </span>
-      </div>
+	      <div id="<%=oCustodian.getId() %>" class="custodian-item item">
+	        <span class="text"><%=oCustodian.getName()%></span>
+	        <span class="action-list">
+	          <span class="delete action">delete</span>
+	          <span class="rename action">rename</span>
+	        </span>
+	      </div>
 <%
 }
 %>
-   </div>
+    </div>
+   </span>
  </body>
 </html>
 

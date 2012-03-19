@@ -1,52 +1,4 @@
-html, body {
-  width: 100%;
-  height: 100%;
-  margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
-  
-  font-family: arial,sans-serif;
-  font-size: 12px;
-}
 
-
-input[type=text],
-input[type=date],
-input[type=number],
-textarea,
-select {
-  padding: 2px 0px 2px 0px;
-  border: 1px solid #C0E0C0;
-  background-color: #F0F8F0;
-  color: #003600;
-}
-
-.bg1 {
-  background-color: #BBBBBB;
-}
-
-.bg2 {
-  background-color: #CCCCCC;
-}
-
-.red {
-	color: red;
-}
-
-.aura-red {
-  -moz-box-shadow: 0 0 20px red !important;
-  -webkit-box-shadow: 0 0 20px red !important;
-}
-
-.aura-green,
-.aura-selected  {
-  -moz-box-shadow: 0 0 20px lightgreen;
-  -webkit-box-shadow: 0 0 20px lightgreen;
-}
-
-.aura-light-blue{
-  -moz-box-shadow: 0 0 20px #1BC6E0;
-  -webkit-box-shadow: 0 0 20px #1BC6E0;
-}
 
 ul.suggest-popup {
 	z-index: 999;
@@ -102,6 +54,7 @@ th.ui-state-default {
 
 .ui-tabs .ui-tabs-panel {
   padding: 0 0 ! important;
+  width: 100%;
 }
 
 .tooltip {
@@ -219,102 +172,9 @@ th.ui-state-default {
 }
 
 
-#app-nav-bar {
-  width: 100%;
-  height: auto;
-  margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
 
-  border-top: 2px solid #C0E0C0;
-  border-bottom: 1px solid #C0E0C0;
-  
-  display: inline-block;
-}
 
-#app-nav-bar a {
-  color: #FFFFFF;
-  text-decoration: none;
-}
 
-#app-nav-bar .current-nav-item {
-  padding: 4px 5px 5px 5px !important;
-  font-weight: bold !important;
-  border-top: 3px solid #4FB500 !important;
-  /*
-  border-left: 3px solid #F5F3E5 !important;
-  border-right: 3px solid #F5F3E5 !important;
-  */
-}
-
-#app-nav-bar .current-nav-item a,
-#app-nav-bar .current-nav-item .text {
-  color: #003600 !important;
-}
-
-#app-nav-bar .app-nav-left-item .text,
-#app-nav-bar .app-nav-right-item .text,
-#app-nav-bar .current-nav-item .text {
-  float: left;
-}
-
-#app-nav-bar .app-nav-left-item,
-#app-nav-bar .app-nav-right-item {
-  margin: -2px 0px 0px 0px;
-  padding: 5px 5px 5px 5px;
-  
-  font-weight: normal;
-
-  cursor: hand; cursor: pointer;
-}
-
-#app-nav-bar .app-nav-left-item:hover,
-#app-nav-bar .app-nav-right-item:hover {
-  background-color: #C0EFC0;
-}
-#app-nav-bar .app-nav-left-item a,
-#app-nav-bar .app-nav-right-item a,
-#app-nav-bar .app-nav-left-item .text,
-#app-nav-bar .app-nav-right-item .text {
-    color: #008000;
-}
-
-#app-nav-bar .app-nav-left-item {
-  border-top: 2px solid transparent;
-  float: left;
-}
-
-#app-nav-bar .app-nav-right-item {
-  border-top: 2px solid transparent;
-  float: right;
-}
-
-#app-nav-bar #user-nav-item span {
-  float: right;
-}
-
-#app-nav-bar #more-nav-item span {
-  float: right;
-}
-
-#header {
-  width: 100%;
-  height: auto;
-  margin: 0px 0px 5px 0px;
-  
-  display: inline-block;
-  position: relative;
-}
-
-#header #logo {
-  position: relative;
-  left: 0px;
-  bottom: 0px;
-}
-
-#header #logo,
-#header #logo img {
-  width: 300px;
-}
 
 
 #result-container {
@@ -460,6 +320,18 @@ th.ui-state-default {
 	height: 26px;
 	position: relative;
   display: inline-block; 
+}
+
+#search-container .record-count {
+	left: 0px;
+	top: 0px;
+	width: 100%;
+	display: inline-block;
+	position: absolute;
+	
+	font-size: 18pt;
+	font-weight: bold;
+	text-align: center;
 }
 
 #search-container #search-button {
@@ -863,7 +735,14 @@ th.ui-state-default {
 .ui-dialog-content .info-item {
 	margin: 2px 0px;
 	width: 400px;
+	position: relative;
 	display: inline-block;
+}
+
+.ui-dialog-content .info-item .icon {
+	left: 0px;
+	top: 4px;
+	position: absolute;
 }
 
 .ui-dialog-content .info-item .label {
@@ -914,6 +793,10 @@ th.ui-state-default {
 
 .ui-dialog-content #location input {
   width: 50px;
+}
+
+.ui-dialog-content #location .icon {
+	left: 170px;
 }
 
 .ui-dialog-content #custodian input {
