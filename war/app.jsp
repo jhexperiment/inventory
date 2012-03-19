@@ -423,7 +423,7 @@ else {
       </div>
       
       <div id="location" class="info-item">
-        <div class="icon ui-state-default ui-corner-all" title=".ui-icon-triangle-1-s">
+        <div class="icon ui-state-default ui-corner-all">
           <span class="ui-icon ui-icon-triangle-1-s"></span>
         </div>
         <span class="label">Location<span class="red">*</span></span>
@@ -433,6 +433,9 @@ else {
       </div>
       
       <div id="custodian" class="info-item">
+        <div class="icon ui-state-default ui-corner-all">
+          <span class="ui-icon ui-icon-triangle-1-s"></span>
+        </div>
         <span class="label">Custodian</span>
         <span class="input">
           <input type="text" class="suggestable" />
@@ -447,6 +450,9 @@ else {
       </div>
       
       <div id="status" class="info-item">
+        <div class="icon ui-state-default ui-corner-all">
+          <span class="ui-icon ui-icon-triangle-1-s"></span>
+        </div>
         <span class="label">Status<span class="red">*</span></span>
         <span class="input">
           <input type="text" class="required suggestable" value="ACTIVE" />
@@ -529,6 +535,9 @@ else {
       </div>
       
       <div id="location" class="info-item">
+        <div class="icon ui-state-default ui-corner-all">
+          <span class="ui-icon ui-icon-triangle-1-s"></span>
+        </div>
         <span class="label">Location <span class="red">*</span></span>
         <span class="input">
           <input type="text" class="required suggestable" />
@@ -536,6 +545,9 @@ else {
       </div>
       
       <div id="custodian" class="info-item">
+        <div class="icon ui-state-default ui-corner-all">
+          <span class="ui-icon ui-icon-triangle-1-s"></span>
+        </div>
         <span class="label">Custodian</span>
         <span class="input">
           <input type="text" class="suggestable" />
@@ -550,6 +562,9 @@ else {
       </div>
       
       <div id="status" class="info-item">
+        <div class="icon ui-state-default ui-corner-all">
+          <span class="ui-icon ui-icon-triangle-1-s"></span>
+        </div>
         <span class="label">Status <span class="red">*</span></span>
         <span class="input">
           <input type="text" class="required suggestable" value="ACTIVE" />
@@ -569,6 +584,9 @@ else {
       <div class="disclaimer"><span class="red">*required</span></div>
       
       <div id="location" class="info-item">
+        <div class="icon ui-state-default ui-corner-all">
+          <span class="ui-icon ui-icon-triangle-1-s"></span>
+        </div>
         <span class="label">Location <span class="red">*</span></span>
         <span class="input">
           <input type="text" class="required suggestable" />
@@ -597,6 +615,9 @@ else {
       </div>
       
       <div id="custodian" class="info-item">
+        <div class="icon ui-state-default ui-corner-all">
+          <span class="ui-icon ui-icon-triangle-1-s"></span>
+        </div>
         <span class="label">Custodian</span>
         <span class="input">
           <input type="text" class="suggestable" />
@@ -618,6 +639,9 @@ else {
       </div>
       
       <div id="status" class="info-item">
+        <div class="icon ui-state-default ui-corner-all">
+          <span class="ui-icon ui-icon-triangle-1-s"></span>
+        </div>
         <span class="label">Status <span class="red">*</span></span>
         <span class="input">
           <input type="text" class="required suggestable" value="ACTIVE" />

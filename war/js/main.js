@@ -20,9 +20,12 @@ $(document).ready(function() {
           var oUl = oElement.parent().find("ul");
           
           if (oUl.length == 0) {
+            var oDrowdownIcon = oElement.parents('.info-item').find(".icon");
             var iHeight = oElement.height() + 10;
+            var iWidth = oElement.width() + oDrowdownIcon.width();
             oUl = $('<ul class="suggest-popup ui-widget-content"></ul>');
             oUl.css("top", iHeight);
+            oUl.width(iWidth);
             oUl.data("sHash", aData.sHash);
             oElement.parent().append(oUl);
           }
@@ -146,7 +149,7 @@ inventoryTable = {
     
     $(".dialog .datepicker").datepicker();
     
-    $(".ui-dialog-content .info-item .icon").click(function() {
+    $(".dialog .info-item .icon").click(function() {
        var oInfoItem = $(this).parents(".info-item");
        oInfoItem.find(".input input").click();
     });
@@ -728,6 +731,11 @@ inventoryTable = {
       "url": '/list',
       "data": aData,
       "success": function(aData, sTextStatus, oJqXHR) {
+        if ( ! $.fnIsEmpty(aData.aRecordList)) {
+          var iCount = aData.aRecordList.length;
+          $("#search-container .record-count").html("Total: " + iCount);
+        } 
+        
         switch (aData.sType) {
           case "general":
             inventoryTable.fillGeneralTable(aData.aRecordList);
@@ -738,10 +746,6 @@ inventoryTable = {
             inventoryTable.addSortingClasses();
             break;
           case "keys":
-            if ( ! $.fnIsEmpty(aData.aRecordList)) {
-              var iCount = aData.aRecordList.length;
-              $("#search-container .record-count").html("Total: " + iCount);
-            } 
             inventoryTable.fillKeyTable(aData.aRecordList);
             inventoryTable.addSortingClasses();
             break;
