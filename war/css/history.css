@@ -1,0 +1,17 @@
+#search-container {
+	display: none;
+}
+
+table#history-list {
+  border-collapse: collapse;
+}
+
+table#history-list td {
+	padding: 4px;
+  border: 1px solid #000000;
+}
+
+table#history-list th#id,
+table#history-list td#id {
+  display: none;
+}

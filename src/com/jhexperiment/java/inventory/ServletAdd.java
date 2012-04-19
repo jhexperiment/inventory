@@ -17,9 +17,11 @@ import com.google.gson.Gson;
 
 import com.jhexperiment.java.inventory.dao.ElectronicInvDao;
 import com.jhexperiment.java.inventory.dao.GeneralInvDao;
+import com.jhexperiment.java.inventory.dao.HistoryDao;
 import com.jhexperiment.java.inventory.dao.KeyInvDao;
 import com.jhexperiment.java.inventory.model.ElectronicInv;
 import com.jhexperiment.java.inventory.model.GeneralInv;
+import com.jhexperiment.java.inventory.model.History;
 import com.jhexperiment.java.inventory.model.KeyInv;
 
 @SuppressWarnings("serial")
@@ -130,7 +132,11 @@ public class ServletAdd extends HttpServlet {
 		                      sLastEditUser);
           this.addKeyItem(oKeyInv);
           //aReturnData = oKeyInv.toHashMap();
+          
+          
         }
+        
+        
         
       }
       

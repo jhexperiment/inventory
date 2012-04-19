@@ -15,9 +15,11 @@ import com.google.gson.Gson;
 
 import com.jhexperiment.java.inventory.dao.ElectronicInvDao;
 import com.jhexperiment.java.inventory.dao.GeneralInvDao;
+import com.jhexperiment.java.inventory.dao.HistoryDao;
 import com.jhexperiment.java.inventory.dao.KeyInvDao;
 import com.jhexperiment.java.inventory.model.ElectronicInv;
 import com.jhexperiment.java.inventory.model.GeneralInv;
+import com.jhexperiment.java.inventory.model.History;
 import com.jhexperiment.java.inventory.model.KeyInv;
 
 
@@ -38,14 +40,16 @@ public class ServletUpdate extends HttpServlet {
         Long id = Long.parseLong(req.getParameter("iId"));
         returnData.put("sHash", hash);
         
+        String sOrigValue = "";
         
         if ("general".equals(invType)) {
           GeneralInv generalInv = GeneralInvDao.INSTANCE.getGeneralInv(id);
           generalInv.setLastEditDate(new Date());
           generalInv.setLastEditUser(user.getEmail());
+          sOrigValue = generalInv.getData(colName).toString();
           generalInv.set(colName, value);
           try {
-            GeneralInvDao.INSTANCE.update(generalInv);
+            GeneralInvDao.INSTANCE.update(generalInv, colName);
             returnData.put("sNewValue", generalInv.getData(colName).toString());
             returnData.put("sLastEditDate", generalInv.getLastEditDate().toString());
             returnData.put("sLastEditUser", generalInv.getLastEditUser().toString());
@@ -63,9 +67,10 @@ public class ServletUpdate extends HttpServlet {
           ElectronicInv electroniclInv = ElectronicInvDao.INSTANCE.getElectronicInv(id);
           electroniclInv.setLastEditDate(new Date());
           electroniclInv.setLastEditUser(user.getEmail());
+          sOrigValue = electroniclInv.getData(colName).toString();
           electroniclInv.set(colName, value);
           try {
-            ElectronicInvDao.INSTANCE.update(electroniclInv);
+            ElectronicInvDao.INSTANCE.update(electroniclInv, colName);
             returnData.put("sNewValue", electroniclInv.getData(colName).toString());
             returnData.put("sLastEditDate", electroniclInv.getLastEditDate().toString());
             returnData.put("sLastEditUser", electroniclInv.getLastEditUser().toString());
@@ -83,9 +88,10 @@ public class ServletUpdate extends HttpServlet {
         	KeyInv keyInv = KeyInvDao.INSTANCE.getKeyInv(id);
             keyInv.setLastEditDate(new Date());
             keyInv.setLastEditUser(user.getEmail());
+            sOrigValue = keyInv.getData(colName).toString();
             keyInv.set(colName, value);
             try {
-              KeyInvDao.INSTANCE.update(keyInv);
+              KeyInvDao.INSTANCE.update(keyInv, colName);
               returnData.put("sNewValue", keyInv.getData(colName).toString());
               returnData.put("sLastEditDate", keyInv.getLastEditDate().toString());
               returnData.put("sLastEditUser", keyInv.getLastEditUser().toString());
@@ -99,10 +105,16 @@ public class ServletUpdate extends HttpServlet {
               returnData.put("sErrorMsg", "Error. " + e.getMessage());
             }
         }
+        
+        
       }
       catch (NumberFormatException e) {
         returnData.put("bError", true);
         returnData.put("sErrorMsg", "Error. Missing Id.");
+      }
+      catch (Exception e) {
+    	  String tmp = e.getMessage();
+    	  tmp = "";
       }
       
       

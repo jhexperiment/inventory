@@ -18,6 +18,7 @@ import com.jhexperiment.java.inventory.DuplicateStatusException;
 import com.jhexperiment.java.inventory.InvItemException;
 import com.jhexperiment.java.inventory.model.ElectronicInv;
 import com.jhexperiment.java.inventory.model.GeneralInv;
+import com.jhexperiment.java.inventory.model.History;
 
 
 
@@ -28,17 +29,47 @@ public enum ElectronicInvDao {
     
   }
   
-  public void update(ElectronicInv electronicInv) throws InvItemException {
+  public void update(ElectronicInv electronicInv, String colName) throws InvItemException {
     synchronized (this) {
       /* TODO: test which is better, this or this.generalInvExists(generalInv.getId()) */
       if (this.electronicInvExists(electronicInv)) {
-        EntityManager em = EMFService.get().createEntityManager();
+    	ElectronicInv oOrigInv = this.getElectronicInv(electronicInv.getId());
+      	
+    	EntityManager em = EMFService.get().createEntityManager();
         try {
           em.persist(electronicInv);
           em.refresh(electronicInv);
         }
         finally {
           em.close();
+        }
+        
+        String sAction = "";
+        String sType = "";
+        if ("DELETED".equals(electronicInv.getStatus())) {
+        	sType = "DELETE";
+        	sAction = 
+	    		"DELETED '" + electronicInv.getDescription() +  
+	        	"' FROM 'electronics'" +
+	        	" BY " + electronicInv.getLastEditUser();
+        	
+        }
+        else {
+        	sType = "UPDATE";
+        	sAction = 
+        		"UPDATED 'electronics' " + 
+            	" SET '" + colName + 
+            	"' FROM '" + oOrigInv.getData(colName) + 
+            	"' TO '" + electronicInv.getData(colName) +
+            	"' BY " + electronicInv.getLastEditUser();
+        }
+        
+        try {
+	        History oHistory = new History(sType, "electronic", electronicInv.getLastEditUser(), new Date(), sAction);
+	    	HistoryDao.INSTANCE.add(oHistory);
+        }
+        catch (Exception e) {
+        	
         }
         
       }
@@ -62,6 +93,19 @@ public enum ElectronicInvDao {
         em.close();
         // throw duplicate absence error
         throw new DuplicateInvItemException("Electronic inventory item not added.");
+      }
+      
+      
+      try {
+	        String sAction = 
+	    		"ADD '" + electronicInv.getDescription() +  
+	        	"' TO 'electronics' " +
+	        	"' BY " + electronicInv.getLastEditUser();
+	    	History oHistory = new History("ADD", "electornics", electronicInv.getLastEditUser(), new Date(), sAction);
+	    	HistoryDao.INSTANCE.add(oHistory);
+      }
+      catch (Exception e) {
+      	
       }
       
       try {

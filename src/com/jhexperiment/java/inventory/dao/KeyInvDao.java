@@ -16,6 +16,7 @@ import com.jhexperiment.java.inventory.DuplicateInvItemException;
 import com.jhexperiment.java.inventory.DuplicateLocationException;
 import com.jhexperiment.java.inventory.DuplicateStatusException;
 import com.jhexperiment.java.inventory.InvItemException;
+import com.jhexperiment.java.inventory.model.History;
 import com.jhexperiment.java.inventory.model.KeyInv;
 import com.jhexperiment.java.inventory.model.GeneralInv;
 import com.jhexperiment.java.inventory.model.KeyInv;
@@ -46,10 +47,13 @@ public enum KeyInvDao {
 	  
   }
   
-  public void update(KeyInv keyInv) throws InvItemException {
+  public void update(KeyInv keyInv, String colName) throws InvItemException {
     synchronized (this) {
       /* TODO: test which is better, this or this.generalInvExists(generalInv.getId()) */
       if (this.keyInvExists(keyInv)) {
+    	  KeyInv oOrigInv = this.getKeyInv(keyInv.getId());
+      	
+    	  
         EntityManager em = EMFService.get().createEntityManager();
         try {
           em.persist(keyInv);
@@ -59,6 +63,33 @@ public enum KeyInvDao {
           em.close();
         }
         
+        String sAction = "";
+        String sType = "";
+        if ("DELETED".equals(keyInv.getStatus())) {
+        	sType = "DELETE";
+        	sAction = 
+	    		"DELETED '" + keyInv.getDescription() +  
+	        	"' FROM 'keys'" +
+	        	" BY " + keyInv.getLastEditUser();
+        	
+        }
+        else {
+        	sType = "UPDATE";
+        	sAction = 
+        		"UPDATED 'keys' " + 
+            	" SET '" + colName + 
+            	"' FROM '" + oOrigInv.getData(colName) + 
+            	"' TO '" + keyInv.getData(colName) +
+            	" BY " + keyInv.getLastEditUser();
+        }
+        
+        try {
+	        History oHistory = new History(sType, "keys", keyInv.getLastEditUser(), new Date(), sAction);
+	    	HistoryDao.INSTANCE.add(oHistory);
+        }
+        catch (Exception e) {
+        	
+        }
       }
       else {
         throw new InvItemException("Inventory item doesn't exist.");
@@ -79,6 +110,18 @@ public enum KeyInvDao {
       else {
         // throw duplicate absence error
         throw new DuplicateInvItemException("Electronic inventory item not added.");
+      }
+      
+      try {
+        String sAction = 
+    		"ADD '" + keyInv.getDescription() +  
+        	"' TO 'keys' " +
+        	" BY " + keyInv.getLastEditUser();
+    	History oHistory = new History("ADD", "keys", keyInv.getLastEditUser(), new Date(), sAction);
+    	HistoryDao.INSTANCE.add(oHistory);
+      }
+      catch (Exception e) {
+	    	
       }
       
       try {

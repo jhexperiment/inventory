@@ -166,7 +166,7 @@ public class ServletImport extends HttpServlet {
       try {
         aJson = oGeneralInv.toHashMap();
         aJson.put("action", action);
-        GeneralInvDao.INSTANCE.update(oGeneralInv);
+        GeneralInvDao.INSTANCE.update(oGeneralInv, "import");
       }
       catch (Exception e) {
         if (e instanceof InvItemException) {
@@ -249,7 +249,7 @@ public class ServletImport extends HttpServlet {
 	      try {
 	        aJson = oElectronicInv.toHashMap();
 	        aJson.put("action", action);
-	        ElectronicInvDao.INSTANCE.update(oElectronicInv);
+	        ElectronicInvDao.INSTANCE.update(oElectronicInv, "import");
 	      }
 	      catch (Exception e) {
 	        if (e instanceof InvItemException) {
@@ -332,7 +332,7 @@ public class ServletImport extends HttpServlet {
 	      try {
 	        aJson = oKeyInv.toHashMap();
 	        aJson.put("action", action);
-	        KeyInvDao.INSTANCE.update(oKeyInv);
+	        KeyInvDao.INSTANCE.update(oKeyInv, "import");
 	      }
 	      catch (Exception e) {
 	        if (e instanceof InvItemException) {

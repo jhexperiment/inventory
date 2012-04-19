@@ -17,9 +17,11 @@ import com.google.gson.Gson;
 
 import com.jhexperiment.java.inventory.dao.ElectronicInvDao;
 import com.jhexperiment.java.inventory.dao.GeneralInvDao;
+import com.jhexperiment.java.inventory.dao.HistoryDao;
 import com.jhexperiment.java.inventory.dao.KeyInvDao;
 import com.jhexperiment.java.inventory.model.ElectronicInv;
 import com.jhexperiment.java.inventory.model.GeneralInv;
+import com.jhexperiment.java.inventory.model.History;
 import com.jhexperiment.java.inventory.model.KeyInv;
 
 
@@ -33,6 +35,8 @@ public class ServletDelete extends HttpServlet {
 			HashMap<String, Object> returnData = new HashMap<String, Object>();
 			returnData.put("bError", false);
 			try {
+				String sDescription = "";
+				
 				String invType = req.getParameter("sInvType");
 				String[] aIdList = req.getParameterValues("aIdList[]");
 				
@@ -46,7 +50,9 @@ public class ServletDelete extends HttpServlet {
 							generalInv.setLastEditDate(oDate);
 							generalInv.setLastEditUser(sUser);
 							generalInv.setStatus("DELETED");
-							GeneralInvDao.INSTANCE.update(generalInv);
+							GeneralInvDao.INSTANCE.update(generalInv, "");
+							
+							
 						}
 						returnData.put("aIdList", aIdList);
 						returnData.put("sLastEditDate", oDate.toString());
@@ -71,7 +77,9 @@ public class ServletDelete extends HttpServlet {
 							electronicInv.setLastEditDate(oDate);
 							electronicInv.setLastEditUser(sUser);
 							electronicInv.setStatus("DELETED");
-							ElectronicInvDao.INSTANCE.update(electronicInv);
+							ElectronicInvDao.INSTANCE.update(electronicInv, "");
+							
+							
 						}
 						returnData.put("aIdList", aIdList);
 						returnData.put("sLastEditDate", oDate.toString());
@@ -96,7 +104,9 @@ public class ServletDelete extends HttpServlet {
 							keyInv.setLastEditDate(oDate);
 							keyInv.setLastEditUser(sUser);
 							keyInv.setStatus("DELETED");
-							KeyInvDao.INSTANCE.update(keyInv);
+							KeyInvDao.INSTANCE.update(keyInv, "");
+							
+							
 						}
 						returnData.put("aIdList", aIdList);
 						returnData.put("sLastEditDate", oDate.toString());
@@ -111,11 +121,17 @@ public class ServletDelete extends HttpServlet {
 						returnData.put("sErrorMsg", "Error. " + e.getMessage());
 					}
 				}
+				
+		        
+		        
 			}
 			catch (NumberFormatException e) {
 				returnData.put("bError", true);
 				returnData.put("sErrorMsg", "Error. Missing Id.");
 			}
+			catch (Exception e) {
+	        	
+	        }
 			
 			
 			Gson gson = new Gson();

@@ -17,6 +17,7 @@ import com.jhexperiment.java.inventory.DuplicateLocationException;
 import com.jhexperiment.java.inventory.DuplicateStatusException;
 import com.jhexperiment.java.inventory.InvItemException;
 import com.jhexperiment.java.inventory.model.GeneralInv;
+import com.jhexperiment.java.inventory.model.History;
 
 
 
@@ -59,17 +60,48 @@ public enum GeneralInvDao {
     
   }
   
-  public void update(GeneralInv generalInv) throws InvItemException {
+  public void update(GeneralInv generalInv, String colName) throws InvItemException {
     synchronized (this) {
       /* TODO: test which is better, this or this.generalInvExists(generalInv.getId()) */
       if (this.generalInvExists(generalInv)) {
-        EntityManager em = EMFService.get().createEntityManager();
+    	GeneralInv oOrigInv = this.getGeneralInv(generalInv.getId());
+    	
+    	EntityManager em = EMFService.get().createEntityManager();
         try {
           em.persist(generalInv);
           em.refresh(generalInv);
         }
         finally {
           em.close();
+        }
+        
+        String sAction = "";
+        String sType = "";
+        
+        if ("DELETED".equals(generalInv.getStatus())) {
+        	sType = "DELETE";
+        	sAction = 
+	    		"DELETED '" + generalInv.getDescription() +  
+	        	"' FROM 'generals' " +
+	        	" BY " + generalInv.getLastEditUser();
+        	
+        }
+        else {
+        	sType = "UPDATE";
+        	sAction = 
+        		"UPDATED 'generals' " + 
+            	" SET '" + colName + 
+            	"' FROM '" + oOrigInv.getData(colName) + 
+            	"' TO '" + generalInv.getData(colName) +
+            	"' BY " + generalInv.getLastEditUser();
+        }
+        
+        try {
+	        History oHistory = new History(sType, "general", generalInv.getLastEditUser(), new Date(), sAction);
+	    	HistoryDao.INSTANCE.add(oHistory);
+        }
+        catch (Exception e) {
+        	
         }
         
       }
@@ -93,6 +125,18 @@ public enum GeneralInvDao {
         em.close();
         // throw duplicate absence error
         throw new DuplicateInvItemException("General inventory item not added.");
+      }
+      
+      try {
+          String sAction = 
+      		"ADD '" + generalInv.getDescription() +  
+          	"' TO 'generals' " +
+          	" BY " + generalInv.getLastEditUser();
+      	History oHistory = new History("ADD", "general", generalInv.getLastEditUser(), new Date(), sAction);
+      	HistoryDao.INSTANCE.add(oHistory);
+        }
+        catch (Exception e) {
+  	    	
       }
       
       try {
