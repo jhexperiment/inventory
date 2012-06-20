@@ -150,10 +150,11 @@ public enum ElectronicInvDao {
     EntityManager em = EMFService.get().createEntityManager();
     String gql = "SELECT e "
           + "FROM ElectronicInv e "
-          + "WHERE e.poNumber = :poNumber "
+          + "WHERE "
+          +   "e.description = :description "
+          +   "AND e.poNumber = :poNumber "
           +   "AND e.poDate = :poDate "
           +   "AND e.poRecieveDate = :poRecieveDate "
-          +   "AND e.description = :description "
           +   "AND e.type = :type "
           +   "AND e.make = :make "
           +   "AND e.model = :model "
@@ -166,28 +167,36 @@ public enum ElectronicInvDao {
           +   "AND e.status = :status "
           +   "AND e.notes = :notes "
           +   "AND e.lastEditDate = :lastEditDate "
-          +   "AND e.lastEditUser = :lastEditUser ";
+          +   "AND e.lastEditUser = :lastEditUser "
+          ;
     Query q = em.createQuery(gql);
-    q.setParameter("poNumber", electronicInv.getPoNumber());
-    q.setParameter("poDate", electronicInv.getPoDate());
-    q.setParameter("poRecieveDate", electronicInv.getPoRecieveDate());
-    q.setParameter("description", electronicInv.getDescription());
-    q.setParameter("type", electronicInv.getMake());
-    q.setParameter("make", electronicInv.getMake());
-    q.setParameter("model", electronicInv.getDescription());
-    q.setParameter("serialNumber", electronicInv.getSerialNumber());
-    q.setParameter("decalNumber", electronicInv.getDecalNumber());
-    q.setParameter("propertyNumber", electronicInv.getPropertyNumber());
-    q.setParameter("location", electronicInv.getLocation());
-    q.setParameter("custodian", electronicInv.getCustodian());
-    q.setParameter("funder", electronicInv.getFunder());
-    q.setParameter("status", electronicInv.getStatus());
-    q.setParameter("notes", electronicInv.getNotes());
-    q.setParameter("lastEditDate", electronicInv.getLastEditDate());
-    q.setParameter("lastEditUser", electronicInv.getLastEditUser());
+    boolean empty = true;
+    try {
+    	q.setParameter("poNumber", electronicInv.getPoNumber());
+	    q.setParameter("description", electronicInv.getDescription());
+	    q.setParameter("poDate", electronicInv.getPoDate());
+	    q.setParameter("poRecieveDate", electronicInv.getPoRecieveDate());
+	    q.setParameter("type", electronicInv.getType());
+	    q.setParameter("make", electronicInv.getMake());
+	    q.setParameter("model", electronicInv.getModel());
+	    q.setParameter("serialNumber", electronicInv.getSerialNumber());
+	    q.setParameter("decalNumber", electronicInv.getDecalNumber());
+	    q.setParameter("propertyNumber", electronicInv.getPropertyNumber());
+	    q.setParameter("location", electronicInv.getLocation());
+	    q.setParameter("custodian", electronicInv.getCustodian());
+	    q.setParameter("funder", electronicInv.getFunder());
+	    q.setParameter("status", electronicInv.getStatus());
+	    q.setParameter("notes", electronicInv.getNotes());
+	    q.setParameter("lastEditDate", electronicInv.getLastEditDate());
+	    q.setParameter("lastEditUser", electronicInv.getLastEditUser());
+	    
+    	List<ElectronicInv> electronicInvList = q.getResultList();
+    	empty = electronicInvList.isEmpty();
+    }
+    catch (Exception e) {
+    	String tmp  = e.getMessage();
+    }
     
-    List<ElectronicInv> electronicInvList = q.getResultList();
-    boolean empty = electronicInvList.isEmpty();
     
     return ! empty; 
   }

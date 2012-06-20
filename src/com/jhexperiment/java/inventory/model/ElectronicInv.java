@@ -93,63 +93,63 @@ public class ElectronicInv implements Comparable<ElectronicInv> {
 
 	    
 	  }
-	  
-	  public Object getData(String key) {
-	    
-	    if ("po-number".equals(key)) {
-	      return this.poNumber;
-	    }
-	    else if ("po-date".equals(key)) {
-	      return this.poDate;
-	    }
-	    else if ("po-recieve-date".equals(key)) {
-	      return this.poRecieveDate;
-	    }
-	    else if ("description".equals(key)) {
-	      return this.description;
-	    }
-	    else if ("type".equals(key)) {
-	      return this.type;
-	    }
-	    else if ("make".equals(key)) {
-	      return this.make;
-	    }
-	    else if ("model".equals(key)) {
-	      return this.model;
-	    }
-	    else if ("serial-number".equals(key)) {
-	      return this.serialNumber;
-	    }
-	    else if ("decal-number".equals(key)) {
-	      return this.decalNumber;
-	    }
-	    else if ("property-number".equals(key)) {
-	      return this.propertyNumber;
-	    }
-	    else if ("location".equals(key)) {
-	      return this.location;
-	    }
-	    else if ("custodian".equals(key)) {
-	      return this.custodian;
-	    }
-	    else if ("funder".equals(key)) {
-	      return this.funder;
-	    }
-	    else if ("status".equals(key)) {
-	      return this.status;
-	    }
-	    else if ("notes".equals(key)) {
-	      return this.notes;
-	    }
-	    else if ("last-edit-date".equals(key)) {
-	      return this.lastEditDate;
-	    }
-	    else if ("last-edit-user".equals(key)) {
-	      return this.lastEditUser;
-	    }
 
-	    return null;
-	  }
+  public Object getData(String key) {
+	    
+    if ("po-number".equals(key)) {
+      return this.poNumber;
+    }
+    else if ("po-date".equals(key)) {
+      return this.poDate;
+    }
+    else if ("po-recieve-date".equals(key)) {
+      return this.poRecieveDate;
+    }
+    else if ("description".equals(key)) {
+      return this.description;
+    }
+    else if ("type".equals(key)) {
+      return this.type;
+    }
+    else if ("make".equals(key)) {
+      return this.make;
+    }
+    else if ("model".equals(key)) {
+      return this.model;
+    }
+    else if ("serial-number".equals(key)) {
+      return this.serialNumber;
+    }
+    else if ("decal-number".equals(key)) {
+      return this.decalNumber;
+    }
+    else if ("property-number".equals(key)) {
+      return this.propertyNumber;
+    }
+    else if ("location".equals(key)) {
+      return this.location;
+    }
+    else if ("custodian".equals(key)) {
+      return this.custodian;
+    }
+    else if ("funder".equals(key)) {
+      return this.funder;
+    }
+    else if ("status".equals(key)) {
+      return this.status;
+    }
+    else if ("notes".equals(key)) {
+      return this.notes;
+    }
+    else if ("last-edit-date".equals(key)) {
+      return this.lastEditDate;
+    }
+    else if ("last-edit-user".equals(key)) {
+      return this.lastEditUser;
+    }
+
+    return null;
+  }
 	  
   
   public ElectronicInv(String poNumber, Date poDate, Date poRecieveDate, String description,
