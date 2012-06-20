@@ -305,6 +305,11 @@ int[] aRecordCount = { 10, 25, 50, 100, 200 };
                   <span class="ui-icon ui-icon-carat-2-n-s"></span>
                   <input class="server-sort-name" type="hidden" value="description" />
                 </th>
+                <th id="type" class="sortable">
+                  Type
+                  <span class="ui-icon ui-icon-carat-2-n-s"></span>
+                  <input class="server-sort-name" type="hidden" value="type" />
+                </th>
                 <th id="make" class="sortable">
                   Make
                   <span class="ui-icon ui-icon-carat-2-n-s"></span>
@@ -541,6 +546,13 @@ int[] aRecordCount = { 10, 25, 50, 100, 200 };
       
       <div id="make" class="info-item">
         <span class="label">Make</span>
+        <span class="input">
+          <input type="text" />
+        </span>
+      </div>
+      
+      <div id="type" class="info-item">
+        <span class="label">Type</span>
         <span class="input">
           <input type="text" />
         </span>

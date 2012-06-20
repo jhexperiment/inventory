@@ -129,12 +129,12 @@ public enum ElectronicInvDao {
   }
   
   public void add(String poNumber, Date poDate, Date poRecieveDate, String description,
-          String make, String model, String serialNumber, String decalNumber, 
+		  String type, String make, String model, String serialNumber, String decalNumber, 
           String propertyNumber, String location, String custodian, String funder,
           String status, String notes, Date lastEditDate, String lastEditUser) throws DuplicateInvItemException {
     synchronized (this) {
     	ElectronicInv electronicInv = 
-    		new ElectronicInv(poNumber, poDate, poRecieveDate, description, make, model,
+    		new ElectronicInv(poNumber, poDate, poRecieveDate, description, type, make, model,
     						 serialNumber, decalNumber, propertyNumber, location, custodian, 
     						 funder, status, notes, lastEditDate, 
                              lastEditUser);  
@@ -154,6 +154,7 @@ public enum ElectronicInvDao {
           +   "AND e.poDate = :poDate "
           +   "AND e.poRecieveDate = :poRecieveDate "
           +   "AND e.description = :description "
+          +   "AND e.type = :type "
           +   "AND e.make = :make "
           +   "AND e.model = :model "
           +   "AND e.serialNumber = :serialNumber "
@@ -171,6 +172,7 @@ public enum ElectronicInvDao {
     q.setParameter("poDate", electronicInv.getPoDate());
     q.setParameter("poRecieveDate", electronicInv.getPoRecieveDate());
     q.setParameter("description", electronicInv.getDescription());
+    q.setParameter("type", electronicInv.getMake());
     q.setParameter("make", electronicInv.getMake());
     q.setParameter("model", electronicInv.getDescription());
     q.setParameter("serialNumber", electronicInv.getSerialNumber());
@@ -247,6 +249,7 @@ public enum ElectronicInvDao {
         boolean matches;
         matches = inv.getPoNumber().matches(regex) ||
         	inv.getDescription().matches(regex) ||
+        	inv.getType().matches(regex) ||
         	inv.getMake().matches(regex) ||
         	inv.getModel().matches(regex) ||
         	inv.getSerialNumber().matches(regex) ||
@@ -316,6 +319,7 @@ public enum ElectronicInvDao {
       for (ElectronicInv inv : electronicInvList) {
         matches = inv.getPoNumber().matches(regex) ||
 	    	inv.getDescription().matches(regex) ||
+	    	inv.getType().matches(regex) ||
 	    	inv.getMake().matches(regex) ||
 	    	inv.getModel().matches(regex) ||
 	    	inv.getSerialNumber().matches(regex) ||

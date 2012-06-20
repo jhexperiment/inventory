@@ -20,6 +20,7 @@ public class ElectronicInv implements Comparable<ElectronicInv> {
   private Date poDate;
   private Date poRecieveDate;
   private String description;
+  private String type;
   private String make;
   private String model;
   private String serialNumber;
@@ -50,10 +51,13 @@ public class ElectronicInv implements Comparable<ElectronicInv> {
 	    else if ("description".equals(key)) {
 	      this.description = (String) value;
 	    }
+	    else if ("type".equals(key)) {
+	      this.make = (String) value;
+	    }
 	    else if ("make".equals(key)) {
 	      this.make = (String) value;
 	    }
-	    else if ("model".equals(key)) {
+		else if ("model".equals(key)) {
 	      this.model = (String) value;
 	    }
 	    else if ("serial-number".equals(key)) {
@@ -104,6 +108,9 @@ public class ElectronicInv implements Comparable<ElectronicInv> {
 	    else if ("description".equals(key)) {
 	      return this.description;
 	    }
+	    else if ("type".equals(key)) {
+	      return this.type;
+	    }
 	    else if ("make".equals(key)) {
 	      return this.make;
 	    }
@@ -146,13 +153,14 @@ public class ElectronicInv implements Comparable<ElectronicInv> {
 	  
   
   public ElectronicInv(String poNumber, Date poDate, Date poRecieveDate, String description,
-             String make, String model, String serialNumber, String decalNumber, 
+		     String type, String make, String model, String serialNumber, String decalNumber, 
              String propertyNumber, String location, String custodian, String funder,
              String status, String notes, Date lastEditDate, String lastEditUser) {
     this.poNumber = poNumber;
     this.poDate = poDate;
     this.poRecieveDate = poRecieveDate;
     this.description = description;
+    this.type = type;
     this.make = make;
     this.model = model;
     this.serialNumber = serialNumber;
@@ -168,7 +176,7 @@ public class ElectronicInv implements Comparable<ElectronicInv> {
   }
   
   public ElectronicInv(Long id, String poNumber, Date poDate, Date poRecieveDate, String description,
-             String make, String model, String serialNumber, String decalNumber, 
+		     String type, String make, String model, String serialNumber, String decalNumber, 
              String propertyNumber, String location, String custodian, String funder,
              String status, String notes, Date lastEditDate, String lastEditUser) {
     this.id = id;
@@ -176,6 +184,7 @@ public class ElectronicInv implements Comparable<ElectronicInv> {
     this.poDate = poDate;
     this.poRecieveDate = poRecieveDate;
     this.description = description;
+    this.type = type;
     this.make = make;
     this.model = model;
     this.serialNumber = serialNumber;
@@ -196,31 +205,34 @@ public class ElectronicInv implements Comparable<ElectronicInv> {
       this.id = Long.parseLong(aData[1]);
     }
     catch (Exception e) {
-      
+	 
     }
     
+    
+    /*
     for (int i = 2; i <= 17; i++) {
       if ("".equals(aData[i])) {
         throw new InvalidElectronicItemException();
       }
     }
-    
+    */
     this.poNumber = aData[2];
     this.poDate = (Date) JhDate.parse(aData[3]);
     this.poRecieveDate = (Date) JhDate.parse(aData[4]);
     this.description = aData[5];
-    this.make = aData[6];
-    this.model = aData[7];
-    this.serialNumber = aData[8];
-    this.decalNumber = aData[9];
-    this.propertyNumber = aData[10];
-    this.location = aData[11];
-    this.custodian = aData[12];
-    this.funder = aData[13];
-    this.status = aData[14];
-    this.notes = aData[15];
-    this.lastEditDate = (Date) JhDate.parse(aData[16]);
-    this.lastEditUser = aData[17];
+    this.type = aData[6];
+    this.make = aData[7];
+    this.model = aData[8];
+    this.serialNumber = aData[9];
+    this.decalNumber = aData[10];
+    this.propertyNumber = aData[11];
+    this.location = aData[12];
+    this.custodian = aData[13];
+    this.funder = aData[14];
+    this.status = aData[15];
+    this.notes = aData[16];
+    this.lastEditDate = (Date) JhDate.parse(aData[17]);
+    this.lastEditUser = aData[18];
   
   }
   
@@ -253,6 +265,7 @@ public class ElectronicInv implements Comparable<ElectronicInv> {
     }
     aOutput.put("po-recieve-date", sDate);
     aOutput.put("description", this.description);
+    aOutput.put("type", this.type);
     aOutput.put("make", this.make);
     aOutput.put("model", this.model);
     aOutput.put("serial-number", this.serialNumber);
@@ -279,6 +292,7 @@ public class ElectronicInv implements Comparable<ElectronicInv> {
     aOutput.put("po-date", null);
     aOutput.put("po-recieve-date", null);
     aOutput.put("description", "");
+    aOutput.put("type", "");
     aOutput.put("make", "");
     aOutput.put("model", "");
     aOutput.put("serial-number", "");
@@ -297,7 +311,7 @@ public class ElectronicInv implements Comparable<ElectronicInv> {
     
   public static String toCsvHeader() {
     return "action,id,po-number,po-date,po-recieve-date,description," +
-     "make,model,serial-number,decal-number,property-number,location,custodian," +
+     "type,make,model,serial-number,decal-number,property-number,location,custodian," +
      "funder,status,notes,last-edit-date,last-edit-user\n";
   }
   
@@ -309,6 +323,7 @@ public class ElectronicInv implements Comparable<ElectronicInv> {
       + '"' + JhDate.format(this.poDate) + "\","
       + '"' + JhDate.format(this.poRecieveDate) + "\","
       + '"' + this.description + "\","
+      + '"' + this.type + "\","
       + '"' + this.make + "\","
       + '"' + this.model + "\","
       + '"' + this.serialNumber + "\","
@@ -357,13 +372,20 @@ public class ElectronicInv implements Comparable<ElectronicInv> {
     this.description = description;
   }
   
+  public String getType() {
+    return this.type;
+  }
+  public void setType(String type) {
+    this.type = type;
+  }
+  
   public String getMake() {
     return this.make;
   }
   public void setMake(String make) {
     this.make = make;
   }
-  
+		  
   public String getModel() {
     return this.model;
   }

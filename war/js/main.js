@@ -418,6 +418,7 @@ inventoryTable = {
             var aData = {
               'sInvType': $("#inventory-type label.ui-state-active").attr("id"),
               'sDescription': oDialog.find("#description input").val(),
+              'sType': oDialog.find("#type input").val(),
               'sMake': oDialog.find("#make input").val(),
               'sModel': oDialog.find("#model input").val(),
               'sSerialNumber': oDialog.find("#serial-number input").val(),
@@ -968,6 +969,7 @@ inventoryTable = {
         '<td id="id">' + aRecord.id + '</td>' +
         '<td id="po-number" class="editable">' + aRecord.poNumber + '</td>' +
         '<td id="description" class="editable">' + aRecord.description + '</td>' +
+        '<td id="type" class="editable">' + aRecord.type + '</td>' +
         '<td id="make" class="editable">' + aRecord.make + '</td>' +
         '<td id="model" class="editable">' + aRecord.model + '</td>' +
         '<td id="serial-number" class="editable">' + aRecord.serialNumber + '</td>' +

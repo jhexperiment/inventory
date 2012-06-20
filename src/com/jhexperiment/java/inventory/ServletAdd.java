@@ -49,6 +49,7 @@ public class ServletAdd extends HttpServlet {
       String sDecalNumber;
       String sPropertyNumber;
       int iQuantity;
+      String sType;
       String sMake;
       String sModel;
       String sSerialNumber;
@@ -103,12 +104,13 @@ public class ServletAdd extends HttpServlet {
             aReturnData = oGeneralInv.toHashMap();
           } 
           else if (bIsElectonricItem) {
-            sMake = req.getParameter("sMake");
+            sType = req.getParameter("sType");
+        	sMake = req.getParameter("sMake");
             sModel = req.getParameter("sMake");
             sSerialNumber = req.getParameter("sSerialNumber");
             sFunder = req.getParameter("sFunder");
             oElectronicInv = new ElectronicInv(sPoNumber, oPoDate, oPoRecieveDate, sDescription,
-				                               sMake, sModel, sSerialNumber, sDecalNumber, 
+				                               sType, sMake, sModel, sSerialNumber, sDecalNumber, 
 				                               sPropertyNumber, sLocation, sCustodian, sFunder,
 				                               sStatus, sNotes, oLastEditDate, sLastEditUser);
             this.addElectronicItem(oElectronicInv);

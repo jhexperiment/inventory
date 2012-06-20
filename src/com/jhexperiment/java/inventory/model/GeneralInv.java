@@ -177,13 +177,13 @@ public class GeneralInv implements Comparable<GeneralInv> {
     catch (Exception e) {
       
     }
-    
+    /*
     for (int i = 2; i <= 14; i++) {
       if ("".equals(aData[i])) {
         throw new InvalidGeneralItemException();
       }
     }
-    
+    */
     this.poNumber = aData[2];
     this.poDate = (Date) JhDate.parse(aData[3]);
     this.poRecieveDate = (Date) JhDate.parse(aData[4]);
