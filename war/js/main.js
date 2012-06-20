@@ -616,10 +616,10 @@ inventoryTable = {
     var iId;
     var sColumnName;
     var sHash = $.md5(new Date().getTime());
-    oElement.parent().addClass(sHash);
+    oElement.parents(".editable").addClass(sHash);
     if (oElement.parent().get(0).tagName == "SPAN") {
       iId = parseInt(oElement.parents("tr").prev("tr").find("#id").html());
-      sColumnName = oElement.parent().attr("id");
+      sColumnName = oElement.parents(".editable").attr("id");
     }
     else {
       // should be a TD element
