@@ -22,9 +22,10 @@ public class History implements Comparable<History> {
 		this.user = user;
 	}
 	
-	public History(String user, Date date) {
+	public History(String user, Date date, String action) {
 		this.user = user;
 		this.date = date;
+		this.action = action;
 	}
 	
 	public History(String type, String inventory, String user, Date date, String action) {
@@ -35,7 +36,7 @@ public class History implements Comparable<History> {
 		this.action = action;
 	}
 	
-	public History(Long id, String inventory, String type, String user, Date date, String action) {
+	public History(Long id, String type, String inventory, String user, Date date, String action) {
 		this.id = id;
 		this.type = type;
 		this.inventory = inventory;

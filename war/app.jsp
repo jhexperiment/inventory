@@ -95,8 +95,24 @@ else {
     <meta charset="utf-8"> 
   </head>
   <body>
-
 	  <input type="hidden" id="importRecordLimit" value="<%= appProps.getProperty("importRecordLimit") %>">
+
+    <div id="modal">
+      <div class="wrapper">
+	      <div class="message-box">
+	        <div class="message">&nbsp;</div>
+	        <img src="/images/progress.bar.loader.gif" />
+	      </div>
+      </div>
+    </div>
+    
+    <div id="progress-box" class="state-hide">
+      <div class="message-box">
+         <div class="message">&nbsp;</div>
+         <img src="/images/progress.bar.loader.gif" />
+       </div>
+    </div>
+
 	  <div id="app-nav-bar">
 	    <div id="mail-nav-item" class="app-nav-left-item">
 	      <a href="http://mail.<%= googleProps.getProperty("domain")%>">Mail</a>
@@ -189,6 +205,24 @@ else {
 	        <span id="delete-button"  type="button" class="ui-button ui-widget ui-state-disabled ui-corner-all">
 	          Delete
 	        </span>
+	        
+<%
+int[] aRecordCount = { 10, 25, 50, 100, 200 };
+%>
+	        <span class="show-count">
+	          Show
+	          <select>
+<%
+  for (int iCount : aRecordCount ) {
+%>
+              <option><%=iCount %></option>
+<%
+  }
+%>
+	          </select>
+	          entries
+	        </span>
+	        
 	        <input id="search-query" type="text">
 	        <span id="search-button"  type="button" class="ui-button ui-widget ui-state-default ui-corner-all">
 	          Search
@@ -371,7 +405,34 @@ else {
 	      </div>
 	    </div>
 	  </div>
-	  
+	  <div id="pagination" class="fg-toolbar ui-toolbar ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix">
+	    <div id="display-info" class="">
+	      Showing 
+	      <span class="start">??</span> 
+        to 
+	      <span class="length">??</span> 
+        of 
+        <span class="total">??</span> 
+        entries
+      </div>
+      <div id="paginate" class="dataTables_paginate fg-buttonset ui-buttonset fg-buttonset-multi ui-buttonset-multi paging_full_numbers">
+        <a id="first" class="first ui-corner-tl ui-corner-bl ui-button ui-state-default ui-state-disabled" tabindex="0">
+          First
+        </a>
+        <a id="previous" class="previous ui-button ui-state-default ui-state-disabled" tabindex="0">
+          Previous
+        </a>
+        <span>
+          <a class="fg-button ui-button ui-state-default ui-state-disabled" tabindex="0">1</a>
+        </span>
+        <a id="next" class="next ui-button ui-state-default ui-state-disabled" tabindex="0">
+          Next
+        </a>
+        <a id="last" class="last ui-corner-tr ui-corner-br ui-button ui-state-default ui-state-disabled" tabindex="0">
+          Last
+        </a>
+      </div>
+    </div>
 	  <div id="footer">
 	    &copy; 2011 A <a href="http://www.jhexperiment.com">JH Experiment</a>&nbsp;&nbsp;&nbsp;&nbsp;
 	  </div>

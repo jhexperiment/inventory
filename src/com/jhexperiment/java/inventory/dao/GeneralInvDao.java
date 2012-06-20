@@ -27,7 +27,7 @@ public enum GeneralInvDao {
   public void clearDatabase() {
     
   }
-  
+   
   public void insertTmpData() {
     Random randomGenerator = new Random();
     String[] descriptionList = new String[] {"Ka noho", "Kou lolouila.", "Jar'o'Peanut", "Pickle"};
@@ -82,7 +82,7 @@ public enum GeneralInvDao {
         	sType = "DELETE";
         	sAction = 
 	    		"DELETED '" + generalInv.getDescription() +  
-	        	"' FROM 'generals' " +
+	        	"' FROM 'gener	als' " +
 	        	" BY " + generalInv.getLastEditUser();
         	
         }
@@ -243,6 +243,10 @@ public enum GeneralInvDao {
   
   public List<GeneralInv> listGeneralInv(String[] aSortList, String sSearch) {
     EntityManager em = EMFService.get().createEntityManager();
+    
+    
+    
+    
     String gql = "SELECT g "
           + "FROM GeneralInv g ";
           //+ "WHERE g.status <> 'DELETED' ";
@@ -256,6 +260,12 @@ public enum GeneralInvDao {
         }
       }
     }
+    
+    /*
+    if ( iDisplayStart != null && iDisplayLength != -1 ) {
+    	gql += " LIMIT " + iDisplayStart + ", " + iDisplayLength;
+    }
+    */
     
     Query q = em.createQuery(gql);
     List<GeneralInv> generalInvList = q.getResultList();

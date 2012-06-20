@@ -72,11 +72,13 @@ public class KeyInv implements Comparable<KeyInv> {
         
       }
       
+      /*
       for (int i = 2; i <= iFieldCount; i++) {
         if ("".equals(aData[i])) {
           throw new InvalidKeyItemException();
         }
       }
+      */
       
       this.location = aData[iIndex++];
       this.description = aData[iIndex++];
@@ -265,6 +267,8 @@ public class KeyInv implements Comparable<KeyInv> {
       + this.id + ","
       + '"' + this.location + "\","
       + '"' + this.description + "\","
+      + '"' + this.keyId + "\","
+      + '"' + this.inStock + "\","
       + '"' + this.custodian + "\","
       + '"' + JhDate.format(this.issuedDate) + "\","
       + '"' + JhDate.format(this.returnedDate) + "\","

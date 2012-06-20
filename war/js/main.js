@@ -91,25 +91,25 @@ buttonSet = {
   'generalClick': function() {
     $("#inventory-type .ui-button").removeClass("ui-state-active");
     $(this).addClass("ui-state-active");
-    $("#general-tab").show();
-    $("#electronics-tab").hide();
-    $("#keys-tab").hide();
+    $("#general-tab").removeClass('state-hide');
+    $("#electronics-tab").addClass('state-hide');
+    $("#keys-tab").addClass('state-hide');
     inventoryTable.getList();
   },
   'electronicsClick': function() {
     $("#inventory-type .ui-button").removeClass("ui-state-active");
     $(this).addClass("ui-state-active");
-    $("#general-tab").hide();
-    $("#electronics-tab").show();
-    $("#keys-tab").hide();
+    $("#general-tab").addClass('state-hide');
+    $("#electronics-tab").removeClass('state-hide');
+    $("#keys-tab").addClass('state-hide');
     inventoryTable.getList();
   },
   'keysClick': function() {
     $("#inventory-type .ui-button").removeClass("ui-state-active");
     $(this).addClass("ui-state-active");
-    $("#general-tab").hide();
-    $("#electronics-tab").hide();
-    $("#keys-tab").show();
+    $("#general-tab").addClass('state-hide');
+    $("#electronics-tab").addClass('state-hide');
+    $("#keys-tab").removeClass('state-hide');
     inventoryTable.getList();
   }
 }
@@ -216,7 +216,16 @@ inventoryTable = {
     $(".inventory-table th").disableSelection();
     
     $(".inventory-table th#info-btn input[type='checkbox']").click(function() {
-      var oCheckboxList = $(".inventory-table td#info-btn input[type='checkbox']");
+      var oInventoryTableList = $(".inventory-table");
+      var oTable = null;
+      $.each(oInventoryTableList, function() {
+        if ( ! $(this).parents(".ui-tabs-panel").hasClass("state-hide")) {
+          oTable = $(this);
+          return false;
+        }
+      });
+      
+      var oCheckboxList = oTable.find("td#info-btn input[type='checkbox']");
       
       if ($(this).attr("checked")) {
         oCheckboxList.attr("checked", true);
@@ -514,6 +523,12 @@ inventoryTable = {
         $("#keys-item-dialog .state-error").removeClass("state-error");
       }
     });
+  
+    $("#search-container .show-count").change(function() {
+      inventoryTable.getList();
+    });
+    
+    $("#paginate .ui-button").click(inventoryTable.fnPaginateClick);
   },
   'setEvents': function() {
     $(".inventory-table .editable").dblclick(function() {
@@ -543,12 +558,12 @@ inventoryTable = {
     $(".inventory-table #info-btn div").click(function() {
       var oIconElement = $(this).find("span"); 
       if (oIconElement.hasClass("ui-icon-circle-arrow-s")) {
-        $(this).parents(".data-row").next(".extra-info-row").show();
+        $(this).parents(".data-row").next(".extra-info-row").removeClass('state-hide');
         oIconElement.removeClass("ui-icon-circle-arrow-s");
         oIconElement.addClass("ui-icon-circle-arrow-n");
       }
       else {
-        $(this).parents(".data-row").next(".extra-info-row").hide();
+        $(this).parents(".data-row").next(".extra-info-row").addClass('state-hide');
         oIconElement.removeClass("ui-icon-circle-arrow-n");
         oIconElement.addClass("ui-icon-circle-arrow-s");
       }
@@ -619,6 +634,9 @@ inventoryTable = {
       'iId': iId,
       'sHash': sHash
     };
+    
+    oElement.parents("td").html(aData.sNewValue);
+    
     $.ajax({
       "dataType": 'json',
       "type": "POST",
@@ -707,7 +725,36 @@ inventoryTable = {
     });
     return oHtmlDom;
   },
-  'getList': function() {
+  'fnPaginateClick': function() {
+    var oPaginateNumbers = $("#paginate span");
+    var iSelectedPage = parseInt(oPaginateNumbers.find(".ui-state-selected").html());
+    
+    if ($(this).hasClass("ui-state-disabled")) {
+      return false;
+    }
+    else if ($(this).hasClass("first")) {
+      inventoryTable.getList(1);
+    }
+    else if ($(this).hasClass("previous")) {
+      inventoryTable.getList(iSelectedPage - 1);
+    }
+    else if ($(this).hasClass("next")) {
+      inventoryTable.getList(iSelectedPage + 1);
+    }
+    else if ($(this).hasClass("last")) {
+      var sPageNum = $.trim(oPaginateNumbers.find(".ui-button:last-child").html());
+      inventoryTable.getList(parseInt(sPageNum));
+    }
+    else if ($(this).hasClass("fg-button")) {
+      var sPageNum = $.trim($(this).html());
+      inventoryTable.getList(parseInt(sPageNum));
+    }
+        
+      
+  },
+  'getList': function(iPage) {
+    
+    
     var aSortList = [];
     $.each(inventoryTable.aSortList, function() {
       var oUiIcon = $(this).find(".ui-icon");
@@ -720,10 +767,31 @@ inventoryTable = {
       }
       aSortList.push($(this).find(".server-sort-name").val() + ' ' + sSortDirection);
     });
+    
+    var oModal = $("#modal");
+    oModal.addClass('state-show');
+    oModal.find(".message-box .message").html("Retrieving list...");
+    
+    var oDisplayInfo = $("#display-info");
+    var sDisplayStart = oDisplayInfo.find(".start").html();
+    
+    var iDisplayLength = parseInt($("#search-container .show-count select").val()); 
+    var iDisplayStart = (sDisplayStart == "??") ? 1 : parseInt($.trim(sDisplayStart));
+    if ($.fnIsEmpty(iPage)) {
+      iPage = 0;
+    }
+    else {
+      iPage -= 1;
+    }
+    iDisplayStart = (iPage * iDisplayLength) + 1;
+    
     var aData = {
       'sType': $("#inventory-type .ui-state-active").attr("id"),
       'aSortList': aSortList,
-      'sSearch': $("#search-container #search-query").val()
+      'sSearch': $("#search-container #search-query").val(),
+      'iDisplayLength': iDisplayLength,
+      'iDisplayStart': iDisplayStart,
+      'iSelectedPage': iPage,
     };
     $.ajax( {
       "dataType": 'json',
@@ -731,10 +799,43 @@ inventoryTable = {
       "url": '/list',
       "data": aData,
       "success": function(aData, sTextStatus, oJqXHR) {
-        if ( ! $.fnIsEmpty(aData.aRecordList)) {
-          var iCount = aData.aRecordList.length;
-          $("#search-container .record-count").html("Total: " + iCount);
-        } 
+        var oModal = $("#modal");
+        oModal.find(".message-box .message").html("Rendering list....");
+        
+        var oDisplayInfo = $("#display-info");
+        
+        $("#search-container .record-count").html("Total: " + aData.iTotal);
+        oDisplayInfo.find(".start").html(aData.iDisplayStart);
+        oDisplayInfo.find(".length").html(aData.iDisplayEnd);
+        oDisplayInfo.find(".total").html(aData.iTotal);
+        
+        
+        var oPaginate = $("#paginate");
+        oPaginate.find(".ui-button").addClass('ui-state-disabled');
+        
+        var oPaginateNumberList = oPaginate.find("span").empty();
+        for (i = 1; i <= aData.iPages; i++) {
+          var sCss = '';
+          if (i == aData.iSelectedPage) {
+            sCss = 'ui-state-disabled ui-state-selected';
+          }
+          
+          var oHtml = $('<a class="fg-button ui-button ui-state-default ' + sCss + '" tabindex="0">' + i + '</a>');
+          oHtml.click(inventoryTable.fnPaginateClick);
+          oPaginateNumberList.append(oHtml);
+        }
+        
+        if (aData.iPages > 1) {
+          oPaginate.find("#next, #last").removeClass('ui-state-disabled');
+        }
+        
+        if (aData.iSelectedPage > 1) {
+          oPaginate.find("#previous, #first").removeClass('ui-state-disabled');
+        }
+        
+        if (aData.iSelectedPage == aData.iPages) {
+          oPaginate.find("#next, #last").addClass('ui-state-disabled');
+        }
         
         switch (aData.sType) {
           case "general":
@@ -750,6 +851,8 @@ inventoryTable = {
             inventoryTable.addSortingClasses();
             break;
         }
+        
+        oModal.removeClass('state-show');
       }
     });
   },
@@ -806,7 +909,7 @@ inventoryTable = {
         '<td id="status" class="editable">' + aRecord.status + '</td>' +
         '<td id="notes" class="editable">' + aRecord.notes + '</td>' + 
       '</tr>' + 
-      '<tr class="extra-info-row ' + sTrClass + '" style="display:none;">' +
+      '<tr class="extra-info-row ' + sTrClass + ' state-hide">' +
         '<td id="info" colspan="11">' +
            '<span class="label">PO Date:</span>' + 
            '<span id="po-date" class="editable">' + 
