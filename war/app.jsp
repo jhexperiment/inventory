@@ -106,7 +106,7 @@ else {
       </div>
     </div>
     
-    <div id="progress-box" class="state-hide">
+    <div id="progress-box" class="state-hide ui-widget-content">
       <div class="message-box">
          <div class="message">&nbsp;</div>
          <img src="/images/progress.bar.loader.gif" />

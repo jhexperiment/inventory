@@ -71,15 +71,17 @@
   position: absolute;
   display: inline-block;
   
-  border: 1px solid #000000;
+  border: 1px solid #C0E0C0;
   border-radius: 10px;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   
-  -moz-box-shadow: 0 0 24px #888888;
-  -webkit-box-shadow: 0 0 24px #888888;
- 
-  background-color: #FFFFFF; 
+  -moz-box-shadow: 0 0 24px #C0E0C0;
+  -webkit-box-shadow: 0 0 24px #C0E0C0;
+}
+
+#progress-box .message-box {
+  padding: 8px;
 }
 
 #progress-box .message-box .message {
@@ -527,7 +529,7 @@ th.ui-state-default {
 #popupMenu .item {
   padding: 5px 5px 5px 5px;
   
-  font-size: 14px;
+  font-size: 10pt;
   font-weight: bold;
   
   cursor: hand; cursor: pointer;
@@ -543,6 +545,14 @@ th.ui-state-default {
   z-index: 101;
 }
 
+#file-upload-menu {
+  font-size: 10pt;
+  font-weight: bold;
+}
+
+#file-upload-menu #record-limit {
+  width: 50px;
+}
 
 
 #content {

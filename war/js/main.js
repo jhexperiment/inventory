@@ -124,7 +124,7 @@ inventoryTable = {
     $("#app-nav-bar #more-nav-item").click(function() {
       menuItemList = new Array();
       menuItemList.push({
-        'name': 'CSV Import ' + $("#inventory-type .ui-button.ui-state-active .ui-button-text").html(), 
+        'name': 'CSV Import ' + $("#inventory-type .ui-button.ui-state-active .ui-button-text").html() + '>', 
         'action': thisPage.csvImport,
         'data': {}
       });
@@ -818,6 +818,15 @@ inventoryTable = {
         
         var oPaginateNumberList = oPaginate.find("span").empty();
         for (i = 1; i <= aData.iPages; i++) {
+          /*
+          if ( (aData.iPages > 10) && (i > 10) && (i % 5 != 0) ) {
+            continue;
+          }
+          else if ( (aData.iPages > 100) && (i > 10) && (i % 10 != 0) ) {
+            continue;
+          }
+          */
+          
           var sCss = '';
           if (i == aData.iSelectedPage) {
             sCss = 'ui-state-disabled ui-state-selected';
@@ -884,17 +893,18 @@ inventoryTable = {
   },
   'addGeneralTableRow': function(oTable, iIndex, aRecord) {
     var sTrClass = (iIndex % 2 == 0) ? "even" : "odd";
-    var oPoDate = "";
+    
+    var oPoDate = "&nbsp;";
     if (aRecord.poDate != null) {
-      oPoDate = $.datepicker.formatDate('mm/dd/yy', new Date(aRecord.poDate));
+      oPoDate = $.datepicker.formatDate('mm/dd/yy', thisPage.fnParseDate(aRecord.poDate));
     }
-    var oPoRecieveDate = "";
+    var oPoRecieveDate = "&nbsp;";
     if (aRecord.poRecieveDate != null) {
-      oPoRecieveDate = $.datepicker.formatDate('mm/dd/yy', new Date(aRecord.poRecieveDate));
+      oPoRecieveDate = $.datepicker.formatDate('mm/dd/yy', thisPage.fnParseDate(aRecord.poRecieveDate));
     }
-    var oLastEditDate = "";
+    var oLastEditDate = "&nbsp;";
     if (aRecord.lastEditDate != null) {
-      oLastEditDate = $.datepicker.formatDate('mm/dd/yy', new Date(aRecord.lastEditDate));
+      oLastEditDate = $.datepicker.formatDate('mm/dd/yy', thisPage.fnParseDate(aRecord.lastEditDate));
     }
     var sHtml = 
       '<tr class="data-row ' + sTrClass + '">' +
@@ -953,15 +963,15 @@ inventoryTable = {
     var sTrClass = (iIndex % 2 == 0) ? "even" : "odd";
     var oPoDate = "&nbsp;";
     if (aRecord.poDate != null) {
-      oPoDate = $.datepicker.formatDate('mm/dd/yy', new Date(aRecord.poDate));
+      oPoDate = $.datepicker.formatDate('mm/dd/yy', thisPage.fnParseDate(aRecord.poDate));
     }
     var oPoRecieveDate = "&nbsp;";
     if (aRecord.poRecieveDate != null) {
-      oPoRecieveDate = $.datepicker.formatDate('mm/dd/yy', new Date(aRecord.poRecieveDate));
+      oPoRecieveDate = $.datepicker.formatDate('mm/dd/yy', thisPage.fnParseDate(aRecord.poRecieveDate));
     }
     var oLastEditDate = "&nbsp;";
     if (aRecord.lastEditDate != null) {
-      oLastEditDate = $.datepicker.formatDate('mm/dd/yy', new Date(aRecord.lastEditDate));
+      oLastEditDate = $.datepicker.formatDate('mm/dd/yy', thisPage.fnParseDate(aRecord.lastEditDate));
     }
     var sHtml = 
       '<tr class="data-row ' + sTrClass + '">' +
@@ -986,7 +996,7 @@ inventoryTable = {
         '<td id="status" class="editable">' + aRecord.status + '</td>' +
         '<td id="notes" class="editable">' + aRecord.notes + '</td>' + 
       '</tr>' + 
-      '<tr class="extra-info-row ' + sTrClass + '" style="display:none;">' +
+      '<tr class="extra-info-row state-hide ' + sTrClass + '">' +
         '<td id="info" colspan="11">' +
            '<span class="label">PO Date:</span>' + 
            '<span id="po-date" class="editable">' + 
@@ -1024,15 +1034,15 @@ inventoryTable = {
     var sTrClass = (iIndex % 2 == 0) ? "even" : "odd";
     var oIssuedDate = "&nbsp;";
     if (aRecord.issuedDate != null) {
-      oIssuedDate = $.datepicker.formatDate('mm/dd/yy', new Date(aRecord.issuedDate));
+      oIssuedDate = $.datepicker.formatDate('mm/dd/yy', thisPage.fnParseDate(aRecord.issuedDate));
     }
     var oReturnedDate = "&nbsp;";
     if (aRecord.returnedDate != null) {
-      oReturnedDate = $.datepicker.formatDate('mm/dd/yy', new Date(aRecord.returnedDate));
+      oReturnedDate = $.datepicker.formatDate('mm/dd/yy', thisPage.fnParseDate(aRecord.returnedDate));
     }
     var oLastEditDate = "&nbsp;";
     if (aRecord.lastEditDate != null) {
-      oLastEditDate = $.datepicker.formatDate('mm/dd/yy', new Date(aRecord.lastEditDate));
+      oLastEditDate = $.datepicker.formatDate('mm/dd/yy', thisPage.fnParseDate(aRecord.lastEditDate));
     }
     var sHtml = 
       '<tr class="data-row ' + sTrClass + '">' +
@@ -1102,6 +1112,20 @@ thisPage = {
     
     $("#inventory-type #general").click();
   },
+  'fnParseDate': function(sDate) {
+    var oRegExp = new RegExp('([A-Za-z]{3}) ([0-9]{1,2}), ([0-9]{4}) ([0-9]{1,2}):([0-9]{2}):([0-9]{2}) (AM|PM)');
+    var oDate = null;
+    var aDate = sDate.match(oRegExp);
+    if (aDate == null) {
+      var tmp = '';
+    }
+    
+    if (aDate[3].substr(0,1) == '0') {
+      aDate[3] = '2' + aDate[3].substr(1,3);
+    }
+    oDate = new Date(aDate[1] + ' ' + aDate[2] + ', 2012');
+    return oDate;
+  },
   'capitalizeMe': function (sText) {
     var newVal = '';
     var val = sText.split(' ');
@@ -1150,20 +1174,24 @@ thisPage = {
     event.preventDefault();
     var sInventoryType = $("#inventory-type .ui-button.ui-state-active .ui-button-text").html().toLowerCase();
     
-    var html  = '<div id="file-upload-menu" class="ui-widget-content auraGreen">'
+    var html  = 
+          '<div id="file-upload-menu" class="ui-widget-content auraGreen">'
           + '<form action="/import" method="POST" type="multipart/form-data">'
           +   '<input type="hidden" name="inventory-type" value="' + sInventoryType + '">'
-          +   '<input type="hidden" id="record-limit" name="record-limit" value="">'
           +   '<input type="file" id="csv-file" name="csv-file">'
+          +   '<br />'
+          +   'Import record limit: ' 
+          +   '<input id="record-limit" name="record-limit" type="text" value="' + $("#importRecordLimit").val() + '"> '
+          +   'records.'
           + '</form>'
           + '</div>'
-          + '<div id="file-upload-menu-tooltip" class="tooltip">'
-          + '<div class="tooltip-content">'
-          +   'Import record limit: <input type="text"> records.'
-          + '</div>'
-          + '<div class="tooltip-arrow-border"></div>'
-          + '<div class="tooltip-arrow"></div>'
-          + '</div>';
+          //+ '<div id="file-upload-menu-tooltip" class="tooltip">'
+          //+ '<div class="tooltip-content">'
+          //+   'Import record limit: <input type="text"> records.'
+          //+ '</div>'
+          //+ '<div class="tooltip-arrow-border"></div>'
+          //+ '<div class="tooltip-arrow"></div>'
+        + '</div>';
     
     var htmlDom = $(html);
     var srcDomOffset = $(this).offset();
@@ -1175,12 +1203,14 @@ thisPage = {
             + parseInt($(this).css('padding-left').replace('px',''))
             + parseInt($(this).css('padding-right').replace('px', ''));
     htmlDom.css('left', left);
+    
     htmlDom.children("form").children("#csv-file").change(function(){
       thisPage.fnShowProgressBox("Importing...");
       
       $("#file-upload-menu form #record-limit").val($("#file-upload-menu-tooltip .tooltip-content input").val());
       $("#file-upload-menu form").submit();
     });
+    
     htmlDom.children('form').ajaxForm({
       "dataType": "json",
       "success": function(info, textStatus, jqXHR) {
@@ -1205,6 +1235,7 @@ thisPage = {
     $("body").append(htmlDom);
     
     //var title = "Import record limit: " + $("#importRecordLimit").val() + " records.";
+    /*
     $("#file-upload-menu-tooltip .tooltip-arrow")
       .removeClass()
       .addClass("tooltip-arrow")
@@ -1221,6 +1252,7 @@ thisPage = {
       position: "bottom center",
       offset: [0, -47]
     });
+    */
     //$("#file-upload-menu .tooltip").show();
     
     
