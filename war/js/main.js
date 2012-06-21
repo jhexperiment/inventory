@@ -769,9 +769,9 @@ inventoryTable = {
       aSortList.push($(this).find(".server-sort-name").val() + ' ' + sSortDirection);
     });
     
-    var oModal = $("#modal");
-    oModal.addClass('state-show');
-    oModal.find(".message-box .message").html("Retrieving list...");
+    //var oModal = $("#modal");
+    //oModal.addClass('state-show');
+    //oModal.find(".message-box .message").html("Retrieving list...");
     
     var oDisplayInfo = $("#display-info");
     var sDisplayStart = oDisplayInfo.find(".start").html();
@@ -785,6 +785,8 @@ inventoryTable = {
       iPage -= 1;
     }
     iDisplayStart = (iPage * iDisplayLength) + 1;
+    
+    thisPage.fnShowProgressBox("Retrieving list...");
     
     var aData = {
       'sType': $("#inventory-type .ui-state-active").attr("id"),
@@ -800,8 +802,8 @@ inventoryTable = {
       "url": '/list',
       "data": aData,
       "success": function(aData, sTextStatus, oJqXHR) {
-        var oModal = $("#modal");
-        oModal.find(".message-box .message").html("Rendering list....");
+        //var oModal = $("#modal");
+        //oModal.find(".message-box .message").html("Rendering list....");
         
         var oDisplayInfo = $("#display-info");
         
@@ -853,7 +855,10 @@ inventoryTable = {
             break;
         }
         
-        oModal.removeClass('state-show');
+        
+        thisPage.fnHideProgressBox("Retrieval complete.");
+        
+        //oModal.removeClass('state-show');
       }
     });
   },
@@ -1171,6 +1176,8 @@ thisPage = {
             + parseInt($(this).css('padding-right').replace('px', ''));
     htmlDom.css('left', left);
     htmlDom.children("form").children("#csv-file").change(function(){
+      thisPage.fnShowProgressBox("Importing...");
+      
       $("#file-upload-menu form #record-limit").val($("#file-upload-menu-tooltip .tooltip-content input").val());
       $("#file-upload-menu form").submit();
     });
@@ -1192,7 +1199,7 @@ thisPage = {
         
         $("#content-header #inventory-type .ui-state-active").click();
         
-        
+        thisPage.fnHideProgressBox("Import Complete.");
       }
     });
     $("body").append(htmlDom);
@@ -1294,6 +1301,17 @@ thisPage = {
     var oResultTable = $("#result-container table#result");
     oResultTable.append(oHtml);
     
+  },
+  'fnShowProgressBox': function(sMessage) {
+    var oProgressBar = $("#progress-box");
+    oProgressBar.find('.message').html(sMessage);
+    oProgressBar.css("display", "none").removeClass('state-hide').fadeIn(1000);
+    
+  },
+  'fnHideProgressBox': function(sMessage) {
+    var oProgressBar = $("#progress-box");
+    oProgressBar.find('.message').html(sMessage);
+    setTimeout('$("#progress-box").fadeOut(2000).addClass("state-hide")', 1500);
   }
   
 }

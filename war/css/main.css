@@ -66,8 +66,8 @@
 
 #progress-box {
   z-index: 99999;
-  right: 508px;
-  top: 72px ;
+  right: 100px;
+  top: 90px ;
   position: absolute;
   display: inline-block;
   
