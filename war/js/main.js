@@ -124,7 +124,7 @@ inventoryTable = {
     $("#app-nav-bar #more-nav-item").click(function() {
       menuItemList = new Array();
       menuItemList.push({
-        'name': 'CSV Import ' + $("#inventory-type .ui-button.ui-state-active .ui-button-text").html() + '>', 
+        'name': 'CSV Import ' + $("#inventory-type .ui-button.ui-state-active .ui-button-text").html() + ' &gt;', 
         'action': thisPage.csvImport,
         'data': {}
       });
@@ -1178,10 +1178,11 @@ thisPage = {
           '<div id="file-upload-menu" class="ui-widget-content auraGreen">'
           + '<form action="/import" method="POST" type="multipart/form-data">'
           +   '<input type="hidden" name="inventory-type" value="' + sInventoryType + '">'
+          +   '<input id="record-limit" type="hidden" name="record-limit" value="' + $("#record-limit-show").val() + '">'
           +   '<input type="file" id="csv-file" name="csv-file">'
           +   '<br />'
           +   'Import record limit: ' 
-          +   '<input id="record-limit" name="record-limit" type="text" value="' + $("#importRecordLimit").val() + '"> '
+          +   '<input id="record-limit-show" type="text" value=""> '
           +   'records.'
           + '</form>'
           + '</div>'
@@ -1207,7 +1208,7 @@ thisPage = {
     htmlDom.children("form").children("#csv-file").change(function(){
       thisPage.fnShowProgressBox("Importing...");
       
-      $("#file-upload-menu form #record-limit").val($("#file-upload-menu-tooltip .tooltip-content input").val());
+      $("#file-upload-menu form #record-limit").val($("#record-limit-show").val());
       $("#file-upload-menu form").submit();
     });
     

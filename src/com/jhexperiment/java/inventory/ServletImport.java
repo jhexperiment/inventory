@@ -55,9 +55,10 @@ public class ServletImport extends HttpServlet {
       
       ArrayList<HashMap<String, Object>> inventoryList = new ArrayList<HashMap<String, Object>>();
       String inventoryType = new String();
+      int importRecordLimit = Integer.parseInt(appProps.getProperty("importRecordLimit"));
+      String recordLimit = "";
       try {
         
-        int importRecordLimit = Integer.parseInt(appProps.getProperty("importRecordLimit"));
         
         ServletFileUpload upload = new ServletFileUpload();
         
@@ -70,10 +71,11 @@ public class ServletImport extends HttpServlet {
               InputStream stream = item.openStream();
               inventoryType = Streams.asString(stream);
             }
-            else if ("record-limit".equals(item.getFieldName())) {
+            if ("record-limit".equals(item.getFieldName())) {
               try {
                 InputStream stream = item.openStream();
                 String tmp = Streams.asString(stream);
+                recordLimit = tmp;
                 importRecordLimit = Integer.parseInt(tmp);
               }
               catch (Exception e) {} // no recordLimit supplied
@@ -141,6 +143,10 @@ public class ServletImport extends HttpServlet {
       finally {
         HashMap<String, Object> info = new HashMap<String, Object>();
         info.put("inventory-list", inventoryList);
+        info.put("record-limit", importRecordLimit);
+        info.put("recordLimit", recordLimit);
+        info.put("inventoryType", inventoryType);
+        
         Gson gson = new Gson();
         String json = gson.toJson(info);
         

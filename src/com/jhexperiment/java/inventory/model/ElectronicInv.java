@@ -216,23 +216,29 @@ public class ElectronicInv implements Comparable<ElectronicInv> {
       }
     }
     */
-    this.poNumber = aData[2];
-    this.poDate = (Date) JhDate.parse(aData[3]);
-    this.poRecieveDate = (Date) JhDate.parse(aData[4]);
-    this.description = aData[5];
-    this.type = aData[6];
-    this.make = aData[7];
-    this.model = aData[8];
-    this.serialNumber = aData[9];
-    this.decalNumber = aData[10];
-    this.propertyNumber = aData[11];
-    this.location = aData[12];
-    this.custodian = aData[13];
-    this.funder = aData[14];
-    this.status = aData[15];
-    this.notes = aData[16];
-    this.lastEditDate = (Date) JhDate.parse(aData[17]);
-    this.lastEditUser = aData[18];
+    try {
+	    this.poNumber = aData.length >= 3 ? aData[2] : "";
+	    this.poDate = aData.length >= 4 ? (Date) JhDate.parse(aData[3]) : null;
+	    this.poRecieveDate = aData.length >= 5 ? (Date) JhDate.parse(aData[4]) : null;
+	    this.description = aData.length >= 6 ? aData[5] : "";
+	    this.type = aData.length >= 7 ? aData[6] : "";
+	    this.make = aData.length >= 8 ? aData[7] : "";
+	    this.model = aData.length >= 9 ? aData[8] : "";
+	    this.serialNumber = aData.length >= 10 ? aData[9] : "";
+	    this.decalNumber = aData.length >= 11 ? aData[10] : "";
+	    this.propertyNumber = aData.length >= 12 ? aData[11] : "";
+	    this.location = aData.length >= 13 ? aData[12] : "";
+	    this.custodian = aData.length >= 14 ? aData[13] : "";
+	    this.funder = aData.length >= 15 ? aData[14] : "";
+	    this.status = aData.length >= 16 ? aData[15] : "";
+	    this.notes = aData.length >= 17 ? aData[16] : "";
+	    this.lastEditDate = aData.length >= 18 ? (Date) JhDate.parse(aData[17]) : null;
+	    this.lastEditUser = aData.length >= 19 ? aData[18] : "";
+    }
+    catch (Exception e) {
+    	String tmp = e.getMessage();
+    	tmp = "";
+    }
   
   }
   
